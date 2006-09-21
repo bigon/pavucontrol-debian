@@ -1,2 +1,2 @@
-?package(pavucontrol):needs="X11" section="Apps/sound"\
+?package(pavucontrol):needs="X11" section="Apps/Sound"\
   title="pavucontrol" command="/usr/bin/pavucontrol"
