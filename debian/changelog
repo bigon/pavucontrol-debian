@@ -1,12 +1,6 @@
-pavucontrol (0.9.4-2) unstable; urgency=low
-
-  * rebuild with libpulse0
-
- -- CJ van den Berg <cj@vdbonline.com>  Thu, 31 Aug 2006 16:55:03 +0200
-
 pavucontrol (0.9.4-1) unstable; urgency=low
 
   * Initial release
 
- -- CJ van den Berg <cj@vdbonline.com>  Wed, 30 Aug 2006 22:16:26 +0200
+ -- CJ van den Berg <cj@vdbonline.com>  Thu, 21 Sep 2006 00:13:49 +0200
 
