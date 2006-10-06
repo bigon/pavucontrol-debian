@@ -1,0 +1,50 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_use_stock_g2.14_icons.dpatch by CJ van den Berg <cj@vdbonline.com>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: use stock GNOME 2.14 icons (instead of GNOME 2.16)
+
+@DPATCH@
+
+diff -Nru pavucontrol-0.9.4-orig/src/pavucontrol.desktop pavucontrol-0.9.4/src/pavucontrol.desktop
+--- pavucontrol-0.9.4-orig/src/pavucontrol.desktop	2006-06-21 01:44:05.000000000 +0200
++++ pavucontrol-0.9.4/src/pavucontrol.desktop	2006-10-06 13:12:19.428242873 +0200
+@@ -5,7 +5,7 @@
+ GenericName=Volume Control
+ Comment=Adjust the volume level
+ Exec=pavucontrol
+-Icon=multimedia-volume-control
++Icon=stock_volume
+ StartupNotify=true
+ Type=Application
+ Categories=Application;AudioVideo;Audio;
+diff -Nru pavucontrol-0.9.4-orig/src/pavucontrol.glade pavucontrol-0.9.4/src/pavucontrol.glade
+--- pavucontrol-0.9.4-orig/src/pavucontrol.glade	2006-08-26 00:50:16.000000000 +0200
++++ pavucontrol-0.9.4/src/pavucontrol.glade	2006-10-06 13:11:54.360916482 +0200
+@@ -12,7 +12,7 @@
+   <property name="default_height">500</property>
+   <property name="resizable">True</property>
+   <property name="destroy_with_parent">False</property>
+-  <property name="icon_name">multimedia-volume-control</property>
++  <property name="icon_name">stock_volume</property>
+   <property name="decorated">True</property>
+   <property name="skip_taskbar_hint">False</property>
+   <property name="skip_pager_hint">False</property>
+@@ -44,7 +44,7 @@
+ 		<widget class="GtkImage" id="image19">
+ 		  <property name="visible">True</property>
+ 		  <property name="icon_size">6</property>
+-		  <property name="icon_name">multimedia-volume-control</property>
++		  <property name="icon_name">stock_volume</property>
+ 		  <property name="xalign">0.5</property>
+ 		  <property name="yalign">0.5</property>
+ 		  <property name="xpad">0</property>
+@@ -828,7 +828,7 @@
+ 			    <widget class="GtkImage" id="image20">
+ 			      <property name="visible">True</property>
+ 			      <property name="icon_size">1</property>
+-			      <property name="icon_name">audio-volume-muted</property>
++			      <property name="icon_name">stock_volume-mute</property>
+ 			      <property name="xalign">0.5</property>
+ 			      <property name="yalign">0.5</property>
+ 			      <property name="xpad">0</property>
