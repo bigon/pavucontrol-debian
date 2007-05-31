@@ -1,8 +1,14 @@
 pavucontrol (0.9.4-2) UNRELEASED; urgency=low
 
+  [ Loic Minier ]
   * Fix typo in copyright.
 
- -- Loic Minier <lool@dooz.org>  Tue, 24 Oct 2006 21:00:22 +0200
+  [ CJ van den Berg ]
+  * debian/rules: Port to CDBS.
+  * debian/patches/01_use_stock_g2.14_icons.dpatch:
+    - Removed. No longer needed for Gnome 2.18.
+
+ -- CJ van den Berg <cj@vdbonline.com>  Tue, 29 May 2007 10:00:36 +0200
 
 pavucontrol (0.9.4-1) unstable; urgency=low
 
