@@ -1,4 +1,4 @@
-# $Id: Makefile.am 5 2006-04-21 19:46:29Z lennart $
+# $Id: Makefile.am 64 2007-10-30 16:27:50Z lennart $
 #
 # This file is part of pavucontrol.
 #
@@ -35,4 +35,14 @@ homepage: all dist
 	cp doc/README.html doc/screenshot.png doc/style.css $$HOME/homepage/private/projects/pavucontrol
 	ln -sf README.html $$HOME/homepage/private/projects/pavucontrol/index.html
 
+fedora-snapshot: dist
+	cp $(distdir).tar.gz $$HOME/cvs.fedora/pavucontrol/devel/$(distdir).svn`date +%Y%m%d`.tar.gz
+
 .PHONY: homepage
+
+dist-hook:
+	if test -d .svn ; then \
+		svn update ; \
+		chmod u+w ${distdir}/ChangeLog || true ; \
+		svn2cl -o ${distdir}/ChangeLog ; \
+	fi

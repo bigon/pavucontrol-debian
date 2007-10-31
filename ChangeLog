@@ -1,0 +1,251 @@
+2007-10-30 16:43  lennart
+
+	* doc/README.html.in: prepare next release
+
+2007-10-30 16:27  lennart
+
+	* Makefile.am: add changelog to tarball
+
+2007-10-30 14:28  lennart
+
+	* src/pavucontrol.glade: make stream title selectable, Closes #140
+	  in pa trac
+
+2007-09-02 23:53  lennart
+
+	* src/pavucontrol.cc: add option to kill a stream to popup menu
+
+2007-09-02 23:38  lennart
+
+	* src/pavucontrol.cc: add popup menu to sink/source view to choose
+	  default device
+
+2007-09-02 21:29  lennart
+
+	* src/pavucontrol.cc, src/pavucontrol.glade: use pretty channel
+	  names
+
+2007-08-31 01:16  lennart
+
+	* src/pavucontrol.cc, src/pavucontrol.glade: add a combobox to the
+	  streams page, to filter application streams
+
+2007-08-24 14:43  lennart
+
+	* src/pavucontrol.cc: Don't pass the button index to popup() for
+	  the GtkMenu to avoid strange GTK behaviour in newer versions.
+	  Identified by coling
+
+2007-08-15 23:19  lennart
+
+	* Makefile.am: add fedora-snapshot target
+
+2007-08-15 19:37  lennart
+
+	* configure.ac: bump deps
+
+2007-08-15 19:37  lennart
+
+	* src/pavucontrol.cc: support muting sink inputs, avoid duplicate
+	  events
+
+2007-08-15 15:14  lennart
+
+	* src/pavucontrol.glade: fix button tooltips
+
+2007-08-09 00:04  lennart
+
+	* src/pavucontrol.glade: fix lock icon
+
+2007-08-07 00:17  lennart
+
+	* src/pavucontrol.glade: minor tweaks
+
+2007-05-23 23:34  lennart
+
+	* LICENSE, autogen.sh, doc/style.css, src/pavucontrol.cc: Fix
+	  license mess: change everything to GPL
+
+2006-08-26 21:12  lennart
+
+	* doc/README.html.in: fix typo
+
+2006-08-26 21:11  lennart
+
+	* doc/README.html.in: update docs for 0.9.5
+
+2006-08-26 21:06  lennart
+
+	* configure.ac: bump requirements
+
+2006-08-25 22:49  lennart
+
+	* src/pavucontrol.glade: add lightbulb
+
+2006-08-21 00:56  lennart
+
+	* src/pavucontrol.cc, src/pavucontrol.glade: - add new option "All
+	  Except Monitor Sources" to sources option menu
+	  - show a nice hint that one can right click on a stream
+
+2006-08-11 23:56  lennart
+
+	* src/pavucontrol.cc: use the sink descripion instead of the name
+	  for the stream popup menu
+
+2006-08-11 17:25  lennart
+
+	* src/pavucontrol.cc: In times where the sink/source names are
+	  generated from HAL UDIs don't show the cryptic device name any
+	  more
+
+2006-08-07 16:45  lennart
+
+	* src/pavucontrol.cc: optimize redraw a little
+
+2006-08-07 15:26  lennart
+
+	* src/pavucontrol.cc, src/pavucontrol.glade: add popup menu to
+	  stream list, allowing "hot" moving of playback streams between
+	  sinks
+
+2006-08-07 13:54  lennart
+
+	* src/pavucontrol.glade: add focus target
+
+2006-08-07 13:50  lennart
+
+	* src/pavucontrol.cc: show an watch cursor while loading device
+	  data
+
+2006-08-07 13:29  lennart
+
+	* src/pavucontrol.cc, src/pavucontrol.glade: add combobox to show
+	  only a subset of sinks/sources, replacing the old monitor
+	  expander
+
+2006-07-24 20:49  lennart
+
+	* doc/README.html.in: prepare release 0.9.3
+
+2006-07-24 20:37  lennart
+
+	* configure.ac: bump version
+
+2006-07-24 20:18  lennart
+
+	* autogen.sh: Make jhbuild happy by adding a file autgen.sh
+
+2006-07-21 20:17  lennart
+
+	* src/pavucontrol.cc: show client name only if we have it
+
+2006-07-08 13:52  lennart
+
+	* doc/README.html.in: prepare 0.9.2 release
+
+2006-06-21 14:10  lennart
+
+	* src/pavucontrol.cc: include config.h properly
+
+2006-06-20 23:54  lennart
+
+	* doc/README.html.in: s/polyp/pulse/ in README
+
+2006-06-20 23:48  lennart
+
+	* configure.ac, src/Makefile.am, src/pavucontrol.cc,
+	  src/pavucontrol.desktop, src/pavucontrol.glade: s/polyp/pulse/g
+
+2006-06-02 20:43  lennart
+
+	* doc/README.html.in: update docs for 0.9.1
+
+2006-06-02 20:42  lennart
+
+	* configure.ac: bump version number to 0.9.1
+
+2006-06-02 20:41  lennart
+
+	* src/Makefile.am: actually ship the .desktop file
+
+2006-06-01 13:39  lennart
+
+	* src/pavucontrol.cc: use gtk_widget_queue_redraw() to try to
+	  workaround an issues that the sources are not shown
+
+2006-05-31 12:15  ossman
+
+	* src/Makefile.am, src/pavucontrol.desktop: Add .desktop file.
+
+2006-05-28 00:34  lennart
+
+	* src/pavucontrol.glade: set icon for the main window
+
+2006-05-28 00:32  lennart
+
+	* src/pavucontrol.glade: use some icons from the icon spec
+
+2006-05-26 23:29  lennart
+
+	* doc/README.html.in: minor updates
+
+2006-05-26 23:27  lennart
+
+	* doc/README.html.in: prepare release 0.9.0
+
+2006-05-20 17:28  lennart
+
+	* src/pavucontrol.cc, src/pavucontrol.glade: Show client name for
+	  playback streams
+
+2006-05-16 21:13  lennart
+
+	* configure.ac, src/pavucontrol.cc, src/pavucontrol.glade: * change
+	  scale behaviour to be more resposive
+	  * make "Streams" page the default
+
+2006-05-16 20:30  lennart
+
+	* configure.ac: bump version number for polypaudio 0.9.0
+
+2006-05-13 23:25  lennart
+
+	* configure.ac: bump for polypadio 0.8.1
+
+2006-04-22 18:21  lennart
+
+	* src/pavucontrol.cc: make SIGPIPE warning disappear
+
+2006-04-21 20:38  lennart
+
+	* doc/README.html.in, src/pavucontrol.cc: fix glade file path
+
+2006-04-21 20:05  lennart
+
+	* doc/screenshot.png: add screenshot for website
+
+2006-04-21 19:55  lennart
+
+	* bootstrap.sh, configure.ac: build system updates
+
+2006-04-21 19:46  lennart
+
+	* ., LICENSE, Makefile.am, configure.ac, doc, doc/Makefile.am,
+	  doc/README.html.in, doc/style.css: add coumentation and license
+
+2006-04-21 19:24  lennart
+
+	* src/pavucontrol.cc: show proper message boxes in case of error
+	  instead of printing just to STDERR
+
+2006-04-21 14:51  lennart
+
+	* ., Makefile.am, bootstrap.sh, configure.ac, src, src/Makefile.am,
+	  src/pavucontrol.cc, src/pavucontrol.glade,
+	  src/pavucontrol.gladep: initial commit
+
+2006-04-21 14:46  lennart
+
+	* .: Create trunk directory
+

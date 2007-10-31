@@ -149,7 +149,8 @@ installed software in a non-standard prefix.
 
 _PKG_TEXT
 ])],
-		[$4])
+		[AC_MSG_RESULT([no])
+                $4])
 elif test $pkg_failed = untried; then
 	ifelse([$4], , [AC_MSG_FAILURE(dnl
 [The pkg-config script could not be found or is too old.  Make sure it
@@ -158,7 +159,7 @@ path to pkg-config.
 
 _PKG_TEXT
 
-To get pkg-config, see <http://www.freedesktop.org/software/pkgconfig>.])],
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.])],
 		[$4])
 else
 	$1[]_CFLAGS=$pkg_cv_[]$1[]_CFLAGS
