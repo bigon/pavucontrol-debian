@@ -1,12 +1,12 @@
 pavucontrol (0.9.5-1) UNRELEASED; urgency=low
 
-  * New Upstream Version
+  * New Upstream Version. (Closes: #448329)
   * debian/copyright: Remove LGPL. paprefs is now fully GPL.
   * debian/control:
     + Add Vcs-* fields.
     + Add Homepage field.
 
- -- CJ van den Berg <cj@vdbonline.com>  Wed, 21 Nov 2007 17:01:24 +0100
+ -- CJ van den Berg <cj@vdbonline.com>  Wed, 21 Nov 2007 17:39:16 +0100
 
 pavucontrol (0.9.4-2) unstable; urgency=low
 
