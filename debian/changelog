@@ -8,6 +8,7 @@ pavucontrol (0.9.5-1) UNRELEASED; urgency=low
     + Add quilt patch system.
   * debian/patches:
     + Add 0001-Correct-invalid-category-entry-in-desktop-file.patch
+  * debian/menu: Move to Applications section now that Apps is obsolete.
 
  -- CJ van den Berg <cj@vdbonline.com>  Wed, 21 Nov 2007 17:39:16 +0100
 
