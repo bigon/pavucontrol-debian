@@ -3,7 +3,7 @@ Section: sound
 Priority: optional
 Maintainer: CJ van den Berg <cj@vdbonline.com>
 Build-Depends: debhelper (>= 5), cdbs, autotools-dev, libpulse-dev,
-    libgtkmm-2.4-dev, libglademm-2.4-dev, lynx, asciidoc, xmlto
+    libgtkmm-2.4-dev, libglademm-2.4-dev, lynx, asciidoc, xmlto, quilt
 Standards-Version: 3.7.2
 Vcs-Git: git://git.debian.org/git/pkg-pulseaudio/pavucontrol.git
 Vcs-Browser: http://git.debian.org/?p=pkg-pulseaudio/pavucontrol.git

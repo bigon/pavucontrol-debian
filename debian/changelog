@@ -5,6 +5,7 @@ pavucontrol (0.9.5-1) UNRELEASED; urgency=low
   * debian/control:
     + Add Vcs-* fields.
     + Add Homepage field.
+    + Add quilt patch system.
 
  -- CJ van den Berg <cj@vdbonline.com>  Wed, 21 Nov 2007 17:39:16 +0100
 

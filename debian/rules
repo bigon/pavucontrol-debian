@@ -2,6 +2,7 @@
 
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
+include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
 common-build-arch:: $(CURDIR)/debian/pavucontrol.1.txt
 	a2x -d manpage -f manpage $(CURDIR)/debian/pavucontrol.1.txt
@@ -9,3 +10,15 @@ common-build-arch:: $(CURDIR)/debian/pavucontrol.1.txt
 clean::
 	rm -f $(CURDIR)/debian/pavucontrol.1.xml
 	rm -f $(CURDIR)/debian/pavucontrol.1
+
+update-patch-series:
+	mkdir -p $(CURDIR)/debian/patches
+	rm -f $(CURDIR)/debian/patches/*.patch
+	git-format-patch -o $(CURDIR)/debian/patches patches ^upstream | \
+		xargs -n 1 basename > $(CURDIR)/debian/patches/series
+	for patch in $$(ls $(CURDIR)/debian/patches/*.patch) ; \
+	do \
+		lines=$$(cat $$patch | wc -l) ; \
+		head -n $$(($$lines - 3)) $$patch > $${patch}.chomped ; \
+		mv $${patch}.chomped $$patch ; \
+	done
