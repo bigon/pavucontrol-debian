@@ -1,3 +1,10 @@
+pavucontrol (0.9.5-2) UNRELEASED; urgency=low
+
+  * Bump Build-Depends on libpulse-dev to >= 0.9.7. This fixes the buildd
+    build for hppa, mips and mipsel.
+
+ -- CJ van den Berg <cj@vdbonline.com>  Tue, 05 Feb 2008 11:43:45 +0100
+
 pavucontrol (0.9.5-1) unstable; urgency=low
 
   * New Upstream Version. (Closes: #448329)
