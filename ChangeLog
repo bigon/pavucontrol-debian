@@ -1,3 +1,18 @@
+2008-03-28 21:25  lennart
+
+	* configure.ac, doc/README.html.in: prepare next pavucontrol
+	  release
+
+2008-03-28 18:44  lennart
+
+	* src/pavucontrol.cc: don't crash if server has no default
+	  sink/source set
+
+2007-11-20 02:14  lennart
+
+	* src/pavucontrol.cc: show radio buttons for the the sink menu
+	  items
+
 2007-10-30 16:43  lennart
 
 	* doc/README.html.in: prepare next release
