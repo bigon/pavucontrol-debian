@@ -1,6 +1,6 @@
-                        PulseAudio Volume Control 0.9.5
+                        PulseAudio Volume Control 0.9.6
 
-   Copyright 2006-2007 Lennart Poettering <mzcnihpbageby (at) 0pointer
+   Copyright 2006-2008 Lennart Poettering <mzcnihpbageby (at) 0pointer
    (dot) de>
      * [1]License
      * [2]News
@@ -30,49 +30,55 @@ License
 
 News
 
+   Fri Mar 28 2008:
+
+   [10]Version 0.9.6 released; draw radio buttons instead of check boxes
+   when moving streams; fix crasher when connecting to a PA server that
+   has no default sink/source configured.
+
    Tue Oct 30 2007:
 
-   [10]Version 0.9.5 released; rework UI; add context menu option to kill
+   [11]Version 0.9.5 released; rework UI; add context menu option to kill
    a playback stream; add context menu option to select the default
    device; use prettier channel names; filter non-application streams by
    default; support muting streams
 
    Sat Aug 26 2006:
 
-   [11]Version 0.9.4 released; add the ability to move a stream to another
+   [12]Version 0.9.4 released; add the ability to move a stream to another
    device while it is playing; limit the list of sinks/sources shown by
    their type; other cleanups
 
    Mon Jul 24 2006:
 
-   [12]Version 0.9.3 released; show client names only if they are set
+   [13]Version 0.9.3 released; show client names only if they are set
 
    Sat Jul 8 2006:
 
-   [13]Version 0.9.2 released; update for [14]PulseAudio 0.9.2
+   [14]Version 0.9.2 released; update for [15]PulseAudio 0.9.2
 
    Fri Jun 2 2006:
 
-   [15]Version 0.9.1 released; add a .desktop file; update icons
+   [16]Version 0.9.1 released; add a .desktop file; update icons
    everywhere
 
    Sat May 27 2006:
 
-   [16]Version 0.9.0 released; update for Polypaudio 0.9.0; show client
+   [17]Version 0.9.0 released; update for Polypaudio 0.9.0; show client
    name of playback streams; make volume slider more responsive
 
    Fri Apr 21 2006:
 
-   [17]Version 0.8 released; initial release
+   [18]Version 0.8 released; initial release
 
 Overview
 
    PulseAudio Volume Control (pavucontrol) is a simple GTK based volume
-   control tool ("mixer") for the [18]PulseAudio sound server. In contrast
+   control tool ("mixer") for the [19]PulseAudio sound server. In contrast
    to classic mixer tools this one allows you to control both the volume
    of hardware devices and of each playback stream seperately.
 
-   Everybody loves [19]screenshots.
+   Everybody loves [20]screenshots.
 
 Current Status
 
@@ -91,9 +97,9 @@ Requirements
    Unix versions) since it uses GNU autoconf for source code
    configuration.
 
-   pavucontrol requires [20]gtkmm and glademmm installed.
+   pavucontrol requires [21]gtkmm and glademmm installed.
 
-   Obviously pavucontrol requires an installation of [21]PulseAudio
+   Obviously pavucontrol requires an installation of [22]PulseAudio
    (version 0.9.5).
 
 Installation
@@ -110,22 +116,22 @@ Acknowledgements
 Download
 
    The newest release is always available from
-   [22]http://0pointer.de/lennart/projects/pavucontrol/
+   [23]http://0pointer.de/lennart/projects/pavucontrol/
 
-   The current release is [23]0.9.5
+   The current release is [24]0.9.6
 
-   Get pavucontrol's development sources from the [24]Subversion
-   [25]repository ([26]viewcvs):
+   Get pavucontrol's development sources from the [25]Subversion
+   [26]repository ([27]viewcvs):
 svn checkout svn://svn.0pointer.net/pavucontrol/trunk pavucontrol
 
    If you want to be notified whenever I release a new version of this
-   software use the subscription feature of [27]Freshmeat.
+   software use the subscription feature of [28]Freshmeat.
      __________________________________________________________________
 
 
-    Lennart Poettering <mzcnihpbageby (at) 0pointer (dot) de>, Oct 2007
+    Lennart Poettering <mzcnihpbageby (at) 0pointer (dot) de>, Mar 2008
 
-   $Id: README.html.in 65 2007-10-30 16:43:12Z lennart $
+   $Id: README.html.in 69 2008-03-28 21:25:20Z lennart $
 
 References
 
@@ -138,21 +144,22 @@ References
    7. README#installation
    8. README#acks
    9. README#download
-  10. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.5.tar.gz
-  11. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.4.tar.gz
-  12. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.3.tar.gz
-  13. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.2.tar.gz
-  14. http://pulseaudio.org/
-  15. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.1.tar.gz
-  16. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.0.tar.gz
-  17. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.8.tar.gz
-  18. http://0pointer.de/lennart/projects/pulseaudio/
-  19. http://0pointer.de/lennart/projects/pavucontrol//screenshot.png
-  20. http://gtkmm.sf.net/
-  21. http://pulseaudio.org/
-  22. http://0pointer.de/lennart/projects/pavucontrol/
-  23. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.5.tar.gz
-  24. http://subversion.tigris.org/
-  25. svn://svn.0pointer.net/pavucontrol
-  26. http://0pointer.net/cgi-bin/viewcvs.cgi/?root=pavucontrol
-  27. http://freshmeat.net/projects/pavucontrol/
+  10. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.6.tar.gz
+  11. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.5.tar.gz
+  12. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.4.tar.gz
+  13. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.3.tar.gz
+  14. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.2.tar.gz
+  15. http://pulseaudio.org/
+  16. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.1.tar.gz
+  17. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.0.tar.gz
+  18. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.8.tar.gz
+  19. http://0pointer.de/lennart/projects/pulseaudio/
+  20. http://0pointer.de/lennart/projects/pavucontrol//screenshot.png
+  21. http://gtkmm.sf.net/
+  22. http://pulseaudio.org/
+  23. http://0pointer.de/lennart/projects/pavucontrol/
+  24. http://0pointer.de/lennart/projects/pavucontrol/pavucontrol-0.9.6.tar.gz
+  25. http://subversion.tigris.org/
+  26. svn://svn.0pointer.net/pavucontrol
+  27. http://0pointer.net/cgi-bin/viewcvs.cgi/?root=pavucontrol
+  28. http://freshmeat.net/projects/pavucontrol/
