@@ -1,4 +1,4 @@
-pavucontrol (0.9.6-1) UNRELEASED; urgency=low
+pavucontrol (0.9.6-1) unstable; urgency=low
 
   * New Upstream Version
   * debian/control: Bump Build-Depends on libpulse-dev to >= 0.9.7.  This
