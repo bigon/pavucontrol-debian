@@ -18,7 +18,7 @@ Description: PulseAudio Volume Control
  WIN32 systems. It is a drop in replacement for the ESD sound server with
  much better latency, mixing/re-sampling quality and overall architecture.
  .
- PulseAudio Volume Control (pavucontrol) is a simple GTK based volume
+ PulseAudio Volume Control (pavucontrol) is a simple GTK+ based volume
  control tool (mixer) for the PulseAudio sound server. In contrast to
  classic mixer tools this one allows you to control both the volume of
  hardware devices and of each playback stream separately. It also allows
