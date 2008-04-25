@@ -4,6 +4,7 @@ pavucontrol (0.9.6+svn20080426-1) unstable; urgency=low
   * debian/patches/0001-Define-missing-flags.patch
     - Added. Define some flags that are not in the current version of
     pulseaudio
+  * debian/copyright: Updated
 
  -- Sjoerd Simons <sjoerd@debian.org>  Sat, 26 Apr 2008 01:08:43 +0200
 
