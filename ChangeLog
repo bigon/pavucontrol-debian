@@ -1,3 +1,48 @@
+2008-04-25 22:08  sjoerd
+
+	* src/pavucontrol.glade: Also point the minimalStreamWindow
+	  downward
+
+2008-04-22 01:00  lennart
+
+	* src/pavucontrol.glade: move no_xxx labels in the middle of the
+	  dialogs
+
+2008-04-22 00:45  lennart
+
+	* src/pavucontrol.cc: properly initialize source output type
+	  dropdown; show string for record streams properly
+
+2008-04-21 00:21  lennart
+
+	* src/pavucontrol.cc, src/pavucontrol.glade: switch to sink page by
+	  default if no streams are active
+
+2008-04-21 00:13  lennart
+
+	* src/pavucontrol.glade: unclutter UI, remove redundant hint bar
+
+2008-04-20 23:56  lennart
+
+	* src/pavucontrol.cc, src/pavucontrol.glade: show volume in decibel
+
+2008-04-20 23:00  lennart
+
+	* src/pavucontrol.cc, src/pavucontrol.glade: Remove the white
+	  header, drop all references to PulseAudio to become a more normal
+	  program
+
+2008-04-20 22:39  lennart
+
+	* src/pavucontrol.glade: move the lock/mute buttons to the same
+	  spot as the menu buttons
+
+2008-04-20 22:13  lennart
+
+	* src/pavucontrol.cc, src/pavucontrol.glade: Merge patch from
+	  sjoerd that adds a new panel for listing recording streams, and
+	  makes the menu more visible by adding a button for it
+
 2008-03-28 21:25  lennart
 
 	* configure.ac, doc/README.html.in: prepare next pavucontrol
