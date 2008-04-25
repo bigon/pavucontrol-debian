@@ -1,3 +1,9 @@
+pavucontrol (0.9.6+svn20080426-1) UNRELEASED; urgency=low
+
+  * New upstream svn snapshot
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 26 Apr 2008 00:21:52 +0200
+
 pavucontrol (0.9.6-1) unstable; urgency=low
 
   * New Upstream Version
