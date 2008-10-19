@@ -1,13 +1,13 @@
 # -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-# $Id: configure.ac 69 2008-03-28 21:25:20Z lennart $
-
 # This file is part of pavucontrol.
 #
-# pavucontrol is free software; you can redistribute it and/or modify it
-# under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
+# Copyright 2006-2008 Lennart Poettering
+#
+# pavucontrol is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
 # (at your option) any later version.
 #
 # pavucontrol is distributed in the hope that it will be useful, but
@@ -16,11 +16,10 @@
 # General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with pavucontrol; if not, write to the Free Software Foundation,
-# Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+# along with pavucontrol. If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.57)
-AC_INIT([pavucontrol],[0.9.6],[mzcnihpbageby (at) 0pointer (dot) de])
+AC_INIT([pavucontrol],[0.9.7],[mzcnihpbageby (at) 0pointer (dot) de])
 AC_CONFIG_SRCDIR([src/pavucontrol.cc])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([foreign 1.9 -Wall])
@@ -39,7 +38,7 @@ AC_PROG_LN_S
 AC_TYPE_SIGNAL
 AC_HEADER_STDC
 
-PKG_CHECK_MODULES(GUILIBS, [ gtkmm-2.4 libglademm-2.4 sigc++-2.0 ])
+PKG_CHECK_MODULES(GUILIBS, [ gtkmm-2.4 libglademm-2.4 sigc++-2.0 libcanberra-gtk ])
 AC_SUBST(GUILIBS_CFLAGS)
 AC_SUBST(GUILIBS_LIBS)
 
@@ -48,7 +47,7 @@ if test -d ../pulseaudio ; then
    PULSE_LIBS='-L$(top_srcdir)/../pulseaudio/src/.libs -lpulse -lpulse-mainloop-glib'
    echo "*** Found pulseaudio in ../pulseaudio, using that version ***"
 else
-   PKG_CHECK_MODULES(PULSE, [ libpulse >= 0.9.7 libpulse-mainloop-glib >= 0.9.5 ])
+   PKG_CHECK_MODULES(PULSE, [ libpulse >= 0.9.12 libpulse-mainloop-glib >= 0.9.12 ])
 fi
 
 AC_SUBST(PULSE_LIBS)
@@ -79,5 +78,19 @@ fi
 
 AM_CONDITIONAL([USE_LYNX], [test "x$lynx" = xyes])
 
-AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile doc/README.html])
+AM_GNU_GETTEXT([external])
+
+IT_PROG_INTLTOOL([0.35.0])
+GETTEXT_PACKAGE=pavucontrol
+AC_SUBST([GETTEXT_PACKAGE])
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[Gettext package])
+AM_GLIB_GNU_GETTEXT
+
+AC_CONFIG_FILES([
+po/Makefile.in
+Makefile
+src/Makefile
+doc/Makefile
+doc/README.html])
+
 AC_OUTPUT
