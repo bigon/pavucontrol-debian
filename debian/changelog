@@ -1,10 +1,10 @@
-pavucontrol (0.9.7-1) UNRELEASED; urgency=low
+pavucontrol (0.9.7-1) experimental; urgency=low
 
   * New Upstream Version
   * debian/control: Add Build-Depend on libpulse-dev (>= 0.9.12) and
     libcanberra-gtk-dev
 
- -- Sjoerd Simons <sjoerd@debian.org>  Sun, 19 Oct 2008 20:08:47 +0100
+ -- Sjoerd Simons <sjoerd@debian.org>  Wed, 24 Dec 2008 22:34:14 +0100
 
 pavucontrol (0.9.6+svn20080426-1) unstable; urgency=low
 
