@@ -1,4 +1,240 @@
 
+2009-04-14	Lennart Poettering
+	f999465: update screenshot
+	b9f0f39: fix POTFILES.in
+	93e38dd: update README
+	83b5eb0: bump version
+	d30c045: don't show failure msgbox twice
+	ee58abe: reenable monitor streams
+
+2009-04-13	Lennart Poettering
+	e9a14ec: sort LINGUAS
+	98aab64: Merge commit 'coling/master'
+
+2009-04-10	Lennart Poettering
+	428bb50: add missing languages to LINGUAS
+	7ebab84: run make update-po
+	940fcdc: Merge commit 'origin/master-tx'
+
+2009-04-09	marcormm
+	7aa8a8b: Sending translation for Portuguese
+	5e7d38b: Sending translation for Portuguese
+
+2009-04-09	raven
+	bf9eb7d: Sending translation for Polish
+
+2009-04-08	amitakhya
+	1060638: Sending translation for Assamese
+
+2009-04-08	Lennart Poettering
+	8a49055: don't show wait cursor forever if stream_restore extension is not available
+
+2009-04-08	ruigo
+	ccf2523: Sending translation for po/LINGUAS
+
+2009-04-07	raven
+	1a50765: Sending translation for Portuguese
+
+2009-04-07	runab
+	c069785: Sending translation for po/bn_IN.po
+
+2009-04-07	ifelix
+	1cb6a5c: Sending translation for po/ta.po
+
+2009-04-07	amitakhya
+	5ca1b7e: Sending translation for po/as.po
+
+2009-04-06	kkrothap
+	2eeb199: Sending translation for po/te.po
+
+2009-04-06	shanky
+	c618334: Sending translation for po/kn.po
+
+2009-04-06	swkothar
+	6b473b0: Sending translation for po/gu.po
+
+2009-04-05	soko
+	c40bfef: Sending translation for po/sr@latin.po
+	7ad64a0: Sending translation for Serbian
+	44c0c28: Sending translation for Serbian
+
+2009-04-05	ruigo
+	ec01c37: Sending translation for Portuguese
+
+2009-04-04	vpv
+	e38f848: Sending translation for Finnish
+
+2009-04-04	kristho
+	8ee7ecc: Sending translation for po/da.po
+
+2009-04-04	nippur
+	f0b9400: Sending translation for Dutch
+
+2009-04-04	sandeeps
+	6462500: Sending translation for po/mr.po
+
+2009-04-03	marcormm
+	d4a59d7: Sending translation for Portuguese
+	a3b935f: Sending translation for Portuguese
+
+2009-04-03	ruigo
+	5652dfb: Sending translation for po/pt.po
+
+2009-04-03	mgiri
+	91bcf74: Sending translation for po/or.po
+
+2009-04-02	feonsu
+	9f48dc7: Sending translation for Slovak
+
+2009-04-01	anipeter
+	026e9fc: Sending translation for po/ml.po
+
+2009-04-01	tombo
+	10e54a2: Sending translation for po/it.po
+
+2009-04-01	leahliu
+	1ca6bbd: Sending translation for Chinese (Simplified)
+
+2009-03-25	Colin Guthrie
+	dc2eb66: Order the card profiles by their priority
+	514a8c1: Silence a warning
+
+2009-03-22	kelemeng
+	9213d67: Sending translation for Hungarian
+
+2009-03-21	Lennart Poettering
+	feff1f6: configure steps for scales
+	7116369: visualize base volume
+
+2009-03-19	Xavier Conde
+	e2266a6: Updated catalan po
+
+2009-03-18	Colin Guthrie
+	6499304: Shuffle some headers around a bit so that some systems don't have build errors
+	c4208bf: Use C style comments as per Lennart's fetish :p
+	c6b73de: Move config.h inclusion to the .cc files
+
+2009-03-16	Colin Guthrie
+	5328807: Split mainwindow into it's own files.
+	cf3da7b: Split rolewidget into it's own files.
+	0d74655: Split sourceoutputwidget out into it's own files.
+	dc5498f: Split sinkinputwidget into it's own files.
+	ed4f413: Split sourcewidget into it's own files.
+	38e7792: Split sinkwidget into it's own files.
+
+2009-03-15	Colin Guthrie
+	d3a66f6: Split cardwidget out into it's own files.
+	a8357b3: Move common setup into a shared header
+	e1e452a: Split out streamwidget into it's own files.
+	f6af4f8: Split channelwidget into separate files. Also separate out the definition of streamwidget into it's own header
+	11989db: Include config.h in minimalstreamwidget.h
+	1c73564: Split the minimalstreamwidget into it's own file
+
+2009-03-13	Manatsawin Hanmongkolchai
+	3aa6efb: Updated Thai translation
+
+2009-03-12	A S Alam
+	ec38c40: Adding Punjabi (pa) Language to LINGUAS
+
+2009-03-08	Domingo Becker
+	7ea9650: updated Spanish translation
+
+2009-03-06	Colin Guthrie
+	0fbc2b1: Remove the minimalStreamWindow. It's no longer used
+
+2009-03-05	Piotr DrÄg
+	b140360: Updated Polish translation
+
+2009-03-02	Lennart Poettering
+	aceeb44: Merge commit 'flameeyes/autoconf-2.62'
+	7711c0a: Merge commit 'flameeyes/master'
+	36aa557: Merge commit 'coling/master'
+	6154459: use the server provided icons
+	3d51330: various small glade updates
+	4bc5637: Merge commit 'coling/master'
+	06cd4af: Merge branch 'master' of ssh://rootserver/home/lennart/git/public/pavucontrol
+	d44795c: fix version of libcanberra dependency, fixes PA bug #494
+
+2009-03-02	Colin Guthrie
+	1758320: Initialise our dropdown at contruction and just repopulate it when the cardinfo callback is received
+
+2009-02-28	Colin Guthrie
+	d816be5: Fix the number of outstanding operations.
+	188ee8c: Typo: spell configuration right
+	6a76183: Add a new widget for the card configuration and use it.
+	1f1c8c8: Create a new 'Configuration' tab
+	3372cd1: Silence some warnings
+	e0c299d: Initial support for changing card profiles.
+
+2009-02-25	Lennart Poettering
+	a6901d7: run make update-po
+	004a9d5: Merge commit 'origin/master-tx'
+
+2009-02-25	Christoph Wickert
+	fbdad2d: Add 'Mixer' categorization to .desktop file
+
+2009-02-04	Lennart Poettering
+	01e4826: deal with non-initialized data from m-s-r
+
+2008-12-24	A S Alam
+	ea530b9: Punjabi translation for Module: A S Alam
+
+2008-12-01	Timo Jyrinki
+	ef2c200: Add fi (Finnish) to LINGUAS.
+	69ca327: Add Finnish (fi) translation by Timo Jyrinki.
+
+2008-11-11	Piotr DrÄg
+	bb99e71: Added zh_CN to LINGUAS
+
+2008-11-10	çé²(Gan Lu)
+	e63c7d0: Add zh_CN.po
+
+2008-10-21	Milos Komarcevic
+	6c7c5dc: Added sr and sr@latin to LINGUAS
+	90c71ac: Initial Serbian Latin translation
+	1ceea0a: Initial Serbian translation
+
+2008-10-17	Piotr DrÄg
+	f748d6f: Updated LINGUAS
+
+2008-10-12	Petr KovÃ¡Å
+	a3218e4: LINGUAS: Added cs.
+	62f57aa: Added Czech translation.
+
+2008-10-12	Domingo Becker
+	f900545: updated spanish translation
+
+2008-10-10	Ozan Caglayan
+	b3de0c5: Added tr to LINGUAS
+	47a4271: Added Turkish Translation
+
+2008-10-09	Lennart Poettering
+	1ad5143: remove debug output
+
+2008-10-07	Xavier Conde
+	e86515a: Added ca locale
+
+2008-10-06	Ondrej Sulek
+	9e23a90: Add sk to LINGUAS
+	3baa6ab: First Slovak translation.
+
+2008-10-06	Nikos Charonitakis
+	29f3c5c: Updated Greek translation
+
+2008-10-05	Xavier Conde
+	1f8e2ad: Added catalan po
+
+2008-09-17	Igor Pires Soares
+	f87509e: Add pt_BR to LINGUAS
+	86baebb: Initial Brazilian Portuguese translation
+
+2008-09-15	Reinout van Schouwen
+	53e97ee: Add nl to LINGUAS
+	e08ab1d: Initial Dutch translation by Reinout van Schouwen
+
+2008-09-10	Florian Steinel
+	ff32763: Updated de translation with input from gnome-de (thanks Hendrik Richter).
+
 2008-09-09	Lennart Poettering
 	52b7f2d: Merge branch 'master' into master-tx
 	802f54a: prepare release 0.9.7
@@ -32,8 +268,22 @@
 2008-08-27	Dimitris Glezos
 	07e9168: Started Greek translation
 
+2008-08-26	Diego 'Flameeyes' PettenÃ²
+	1e5ac41: Merge branch 'master' of git://git.0pointer.de/pavucontrol
+
 2008-08-19	Lennart Poettering
 	ecc9ad9: beep when changing volume
+
+2008-08-08	Diego 'Flameeyes' PettenÃ²
+	9456662: Install README files in doc/html directories.
+	c6cc345: Make use of common ZP_LYNX_DOC macro.
+	6f7e941: Create m4 directory, and set it up.
+
+2008-08-07	Diego 'Flameeyes' PettenÃ²
+	85aa1cc: Bump autoconf requirement to 2.62 (latest released version).
+
+2008-08-08	Diego 'Flameeyes' PettenÃ²
+	984b2c4: Remove gettext macro, the package uses intltool instead.
 
 2008-08-05	Lennart Poettering
 	34e69af: improve german translation
@@ -138,7 +388,7 @@
 	d9b8cb6: add lightbulb
 
 2006-08-21	Lennart Poettering
-	65cb23b: - add new option "All Except Monitor Sources" to sources option menu
+	65cb23b: - add new option "All Except Monitor Sources" to sources option menu - show a nice hint that one can right click on a stream
 
 2006-08-11	Lennart Poettering
 	0f279b4: use the sink descripion instead of the name for the stream popup menu
@@ -192,7 +442,7 @@
 	d6deb8c: Show client name for playback streams
 
 2006-05-16	Lennart Poettering
-	2e1bf7e: * change scale behaviour to be more resposive
+	2e1bf7e: * change scale behaviour to be more resposive * make "Streams" page the default
 	96cc4d1: bump version number for polypaudio 0.9.0
 
 2006-05-13	Lennart Poettering
