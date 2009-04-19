@@ -2,6 +2,7 @@ pavucontrol (0.9.8-1) UNRELEASED; urgency=low
 
   * New Upstream Version
   * debian/copyright: Updated
+  * debian/control: bump libpulse-dev build-depend to >= 0.9.15
 
  -- Sjoerd Simons <sjoerd@debian.org>  Thu, 16 Apr 2009 22:08:16 +0100
 
