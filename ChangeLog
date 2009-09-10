@@ -1,5 +1,185 @@
 
+2009-09-10	Lennart Poettering
+	32ea0f3: i18n: run make update-po
+	2c0bf47: i18n: drop ko.po since it does not include a single translated string
+	7201cfa: Merge remote branch 'origin/master-tx'
+	3548ead: Prepare 0.9.9 relase
+
+2009-09-09	Lennart Poettering
+	32d6f81: drop reference to beepDevice
+
+2009-08-31	ifelix
+	59f41f4: Sending translation for Tamil
+
+2009-08-30	vpv
+	c971329: Sending translation for Finnish
+
+2009-08-29	raven
+	f194512: Sending translation for po/LINGUAS
+
+2009-08-27	Lennart Poettering
+	8a11d0f: fix event sound generation for volume changes
+	5143fa8: only assume that the minimal volume is silence for devices that can do dB volumes
+
+2009-08-26	Lennart Poettering
+	b373c00: use fallback icon scheme for stream icons, too
+
+2009-08-25	mvdz
+	fbabebe: Sending translation for po/uk.po
+
+2009-08-13	eukim
+	150df71: Sending translation for po/ko.po
+
+2009-07-27	yeager
+	9f4cfaa: Sending translation for Swedish
+
+2009-07-06	zoltanh721
+	778b163: Sending translation for Hungarian
+
+2009-07-01	Lennart Poettering
+	d98588b: glade: minor alignment fixes
+
+2009-06-28	Colin Guthrie
+	f1a23af: Restructure the class inheritance a bit.
+	ac052e1: Rename event method to be more indicative of what it does.
+
+2009-06-27	Colin Guthrie
+	61cae8c: Rename a variable to make it more generic
+	1596091: Add support for changing ports.
+
+2009-06-17	Colin Guthrie
+	7b3083d: Don't use a hyperlink to display the device, just use a regular button.
+	514a66e: Do not disable the default button when it's set.
+	7a7c1fc: Hide the terminate button.
+
+2009-06-13	Colin Guthrie
+	02b316f: More changes in the UI to try and make things neater.
+
+2009-03-21	Colin Guthrie
+	e715626: Create the event role widget early so that it's always top of the list.
+
+2009-03-25	Colin Guthrie
+	b96c707: Change 'Default' to 'Use as fallback'
+
+2009-03-22	Colin Guthrie
+	ddd7d06: Move the setBaseVolume()/setSteps() methods to devicewidget (problem found after rebasing)
+
+2009-03-18	Colin Guthrie
+	dea5d0a: Include config.h in the cc file (after rebase)
+
+2009-03-16	Colin Guthrie
+	26d5749: Add a tooltip
+	4bd94fa: Wire up all the new UI code.
+	4c3acd3: Wire up the default toggle button (replaces the old menu)
+	fab8d8d: Hook up the device combo box on change event
+	ca441f4: Remove the 'Default [Out	0667b9d: Set the correct combo index for display purposes
+	cfa1cd3: Record in a map the combobox indexes vs. the sink/source indexes
+	903c26b: Add setter/getter methods for sink/source indexes so we can update our combo boxes current item
+	255defb: Remove the kill menu item now we have a dedicated button
+	ee85593: Wire up the terminate button
+	798f51f: Set the pack_start on the deviceCombo
+	d617c39: Set the mainwindow pointer via an init() method rather than directly via public member variable.
+	7b7a12f: Adapt to new UI
+	e509205: Rebase the sink/source widgets on the device widget
+	644cfdd: Create a devicewidget based on streamwidget.
+
+2009-03-06	Colin Guthrie
+	7d296ec: Glade UI changes. Code still needs to be updated
+
+2009-06-17	Lennart Poettering
+	b533288: update po/
+	b883ebf: Merge commit 'origin/master-tx'
+	f31d6c6: Merge commit 'coling/master'
+	4e73145: make sure that two card profiles with the same priority don't collide with each other
+
+2009-06-14	Lennart Poettering
+	874ebed: don't abort when icon is missing from the theme
+
+2009-06-10	Colin Guthrie
+	d781a79: Fix my name.
+
+2009-06-06	aalam
+	4a2eb79: Sending translation for Punjabi
+
+2009-06-05	rajesh
+	b8d40ac: Sending translation for po/hi.po
+
+2009-06-01	jassy
+	fa79fc2: Sending translation for Punjabi
+
+2009-05-26	jassy
+	b5a70ba: Sending translation for Punjabi
+
+2009-05-26	runab
+	a8ab6c8: Sending translation for Bengali (India)
+
+2009-05-06	anipeter
+	43e244f: Sending translation for Malayalam
+
+2009-05-04	feonsu
+	6d5f985: Sending translation for Slovak
+
+2009-05-03	kmilos
+	2960fa9: Sending translation for po/sr@latin.po
+	ab9049d: Sending translation for Serbian
+
+2009-05-01	renault
+	dbe3124: Sending translation for French
+	1d91afd: Sending translation for French
+
+2009-04-28	ruigo
+	a6dfda2: Sending translation for Portuguese
+
+2009-04-27	pmkovar
+	ca267cf: Sending translation for Czech
+
+2009-04-23	amitakhya
+	89f4425: Sending translation for Assamese
+
+2009-04-23	stiletto
+	134245d: Sending translation for po/ru.po
+
+2009-04-20	marionline
+	f667773: Sending translation for Italian
+
+2009-04-19	igor
+	a99533a: Sending translation for Brazilian Portuguese
+
+2009-04-18	troubi51
+	62ca56c: Sending translation for French
+
+2009-04-16	heffer
+	35c830a: Sending translation for German
+
+2009-04-15	kristho
+	7b7276e: Sending translation for Danish
+
+2009-04-14	warrink
+	5aa4fd2: Sending translation for Dutch
+
+2009-04-14	raven
+	d5542e3: Sending translation for Polish
+
+2009-04-14	kkrothap
+	56d67bc: Sending translation for Telugu
+
+2009-04-14	sandeeps
+	3cad368: Sending translation for Marathi
+
+2009-04-14	swkothar
+	9e57698: Sending translation for Gujarati
+
+2009-04-14	mgiri
+	fb3fbf3: Sending translation for Oriya
+
+2009-04-14	shanky
+	cc0b50c: Sending translation for Kannada
+
+2009-04-14	kad
+	efa33e1: Sending translation for Spanish
+
 2009-04-14	Lennart Poettering
+	4663ea6: fix year
 	f999465: update screenshot
 	b9f0f39: fix POTFILES.in
 	93e38dd: update README

@@ -32,7 +32,8 @@ RoleWidget::RoleWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade:
     StreamWidget(cobject, x) {
 
     lockToggleButton->hide();
-    streamToggleButton->hide();
+    directionLabel->hide();
+    deviceButton->hide();
 }
 
 RoleWidget* RoleWidget::create() {
@@ -40,6 +41,10 @@ RoleWidget* RoleWidget::create() {
     Glib::RefPtr<Gnome::Glade::Xml> x = Gnome::Glade::Xml::create(GLADE_FILE, "streamWidget");
     x->get_widget_derived("streamWidget", w);
     return w;
+}
+
+bool RoleWidget::onContextTriggerEvent(GdkEventButton*) {
+    return false;
 }
 
 void RoleWidget::onMuteToggleButton() {

@@ -29,29 +29,40 @@
 #include "i18n.h"
 
 SinkInputWidget::SinkInputWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x) :
-    StreamWidget(cobject, x),
-    mainWindow(NULL),
-    titleMenuItem(_("_Move Stream..."), true),
-    killMenuItem(_("_Terminate Stream"), true) {
+    StreamWidget(cobject, x) {
 
-    add_events(Gdk::BUTTON_PRESS_MASK);
+    gchar *txt;
+    directionLabel->set_label(txt = g_markup_printf_escaped("<i>%s</i>", _("on")));
+    g_free(txt);
 
-    menu.append(titleMenuItem);
-    titleMenuItem.set_submenu(submenu);
-
-    menu.append(killMenuItem);
-    killMenuItem.signal_activate().connect(sigc::mem_fun(*this, &SinkInputWidget::onKill));
+    terminate.set_label(_("Terminate Playback"));
 }
 
-SinkInputWidget::~SinkInputWidget() {
-    clearMenu();
-}
-
-SinkInputWidget* SinkInputWidget::create() {
+SinkInputWidget* SinkInputWidget::create(MainWindow* mainWindow) {
     SinkInputWidget* w;
     Glib::RefPtr<Gnome::Glade::Xml> x = Gnome::Glade::Xml::create(GLADE_FILE, "streamWidget");
     x->get_widget_derived("streamWidget", w);
+    w->init(mainWindow);
     return w;
+}
+
+SinkInputWidget::~SinkInputWidget(void) {
+    clearMenu();
+}
+
+void SinkInputWidget::setSinkIndex(uint32_t idx) {
+    mSinkIndex = idx;
+
+    if (mpMainWindow->sinkWidgets.count(idx)) {
+        SinkWidget *w = mpMainWindow->sinkWidgets[idx];
+        deviceButton->set_label(w->description.c_str());
+    }
+    else
+        deviceButton->set_label(_("Unknown output"));
+}
+
+uint32_t SinkInputWidget::sinkIndex() {
+    return mSinkIndex;
 }
 
 void SinkInputWidget::executeVolumeUpdate() {
@@ -80,30 +91,6 @@ void SinkInputWidget::onMuteToggleButton() {
     pa_operation_unref(o);
 }
 
-void SinkInputWidget::prepareMenu() {
-  clearMenu();
-  buildMenu();
-}
-
-void SinkInputWidget::clearMenu() {
-
-    while (!sinkMenuItems.empty()) {
-        std::map<uint32_t, SinkMenuItem*>::iterator i = sinkMenuItems.begin();
-        delete i->second;
-        sinkMenuItems.erase(i);
-    }
-}
-
-void SinkInputWidget::buildMenu() {
-    for (std::map<uint32_t, SinkWidget*>::iterator i = mainWindow->sinkWidgets.begin(); i != mainWindow->sinkWidgets.end(); ++i) {
-        SinkMenuItem *m;
-        sinkMenuItems[i->second->index] = m = new SinkMenuItem(this, i->second->description.c_str(), i->second->index, i->second->index == sinkIndex);
-        submenu.append(m->menuItem);
-    }
-
-    menu.show_all();
-}
-
 void SinkInputWidget::onKill() {
     pa_operation* o;
     if (!(o = pa_context_kill_sink_input(get_context(), index, NULL, NULL))) {
@@ -114,19 +101,44 @@ void SinkInputWidget::onKill() {
     pa_operation_unref(o);
 }
 
+void SinkInputWidget::clearMenu() {
+  while (!sinkMenuItems.empty()) {
+    std::map<uint32_t, SinkMenuItem*>::iterator i = sinkMenuItems.begin();
+    delete i->second;
+    sinkMenuItems.erase(i);
+  }
+}
+
+void SinkInputWidget::buildMenu() {
+  for (std::map<uint32_t, SinkWidget*>::iterator i = mpMainWindow->sinkWidgets.begin(); i != mpMainWindow->sinkWidgets.end(); ++i) {
+    SinkMenuItem *m;
+    sinkMenuItems[i->second->index] = m = new SinkMenuItem(this, i->second->description.c_str(), i->second->index, i->second->index == mSinkIndex);
+    menu.append(m->menuItem);
+  }
+  menu.show_all();
+}
+
 void SinkInputWidget::SinkMenuItem::onToggle() {
+  if (widget->updating)
+    return;
 
-    if (widget->updating)
-        return;
+  if (!menuItem.get_active())
+    return;
 
-    if (!menuItem.get_active())
-        return;
+  /*if (!mpMainWindow->sinkWidgets.count(widget->index))
+    return;*/
 
-    pa_operation* o;
-    if (!(o = pa_context_move_sink_input_by_index(get_context(), widget->index, index, NULL, NULL))) {
-        show_error(_("pa_context_move_sink_input_by_index() failed"));
-        return;
-    }
+  pa_operation* o;
+  if (!(o = pa_context_move_sink_input_by_index(get_context(), widget->index, index, NULL, NULL))) {
+    show_error(_("pa_context_move_sink_input_by_index() failed"));
+    return;
+  }
 
-    pa_operation_unref(o);
+  pa_operation_unref(o);
+}
+
+void SinkInputWidget::onDeviceChangePopup() {
+    clearMenu();
+    buildMenu();
+    menu.popup(1, 0);
 }

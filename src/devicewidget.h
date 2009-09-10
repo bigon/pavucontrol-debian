@@ -18,28 +18,24 @@
   along with pavucontrol. If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef streamwidget_h
-#define streamwidget_h
+#ifndef devicewidget_h
+#define devicewidget_h
 
 #include "pavucontrol.h"
 
 #include "minimalstreamwidget.h"
 
-class MainWindow;
 class ChannelWidget;
 
-class StreamWidget : public MinimalStreamWidget {
+class DeviceWidget : public MinimalStreamWidget {
 public:
-    StreamWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x);
-    void init(MainWindow* mainWindow);
+    DeviceWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x);
 
     void setChannelMap(const pa_channel_map &m, bool can_decibel);
     void setVolume(const pa_cvolume &volume, bool force = false);
     virtual void updateChannelVolume(int channel, pa_volume_t v);
 
-    Gtk::ToggleButton *lockToggleButton, *muteToggleButton;
-    Gtk::Label *directionLabel;
-    Gtk::Button *deviceButton;
+    Gtk::ToggleButton *lockToggleButton, *muteToggleButton, *defaultToggleButton;
 
     pa_channel_map channelMap;
     pa_cvolume volume;
@@ -47,21 +43,42 @@ public:
     ChannelWidget *channelWidgets[PA_CHANNELS_MAX];
 
     virtual void onMuteToggleButton();
-    virtual void onDeviceChangePopup();
-    virtual bool onContextTriggerEvent(GdkEventButton*);
+    virtual void onDefaultToggleButton();
+    virtual void setDefault(bool isDefault);
 
     sigc::connection timeoutConnection;
 
     bool timeoutEvent();
 
     virtual void executeVolumeUpdate();
-    virtual void onKill();
+    virtual void setBaseVolume(pa_volume_t v);
+    virtual void setSteps(unsigned n);
+
+    std::vector< std::pair<Glib::ustring,Glib::ustring> > ports;
+    Glib::ustring activePort;
+
+    void prepareMenu();
 
 protected:
-    MainWindow* mpMainWindow;
+    virtual void onPortChange() = 0;
 
-    Gtk::Menu contextMenu;
-    Gtk::MenuItem terminate;
+    /* Tree model columns */
+    class ModelColumns : public Gtk::TreeModel::ColumnRecord
+    {
+      public:
+
+        ModelColumns()
+        { add(name); add(desc); }
+
+        Gtk::TreeModelColumn<Glib::ustring> name;
+        Gtk::TreeModelColumn<Glib::ustring> desc;
+    };
+
+    ModelColumns portModel;
+
+    Gtk::HBox *portSelect;
+    Gtk::ComboBox *portList;
+    Glib::RefPtr<Gtk::ListStore> treeModel;
 };
 
 #endif

@@ -29,28 +29,18 @@ public:
 
     Gtk::VBox *channelsVBox;
     Gtk::Label *nameLabel, *boldNameLabel;
-    Gtk::ToggleButton *streamToggleButton;
-    Gtk::Menu menu;
     Gtk::Image *iconImage;
     Gtk::ProgressBar peakProgressBar;
     double lastPeak;
 
     bool updating;
 
-    void onStreamToggleButton();
-    void onMenuDeactivated();
-    void popupMenuPosition(int& x, int& y, bool& push_in);
-
-    virtual void prepareMenu(void);
+    virtual void onMuteToggleButton() = 0;
+    virtual void updateChannelVolume(int channel, pa_volume_t v) = 0;
 
     bool volumeMeterEnabled;
     void enableVolumeMeter();
     void updatePeak(double v);
-
-    Glib::ustring beepDevice;
-
-protected:
-    virtual bool on_button_press_event(GdkEventButton* event);
 };
 
 #endif
