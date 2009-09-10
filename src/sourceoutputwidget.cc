@@ -29,29 +29,40 @@
 #include "i18n.h"
 
 SourceOutputWidget::SourceOutputWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x) :
-    MinimalStreamWidget(cobject, x),
-    mainWindow(NULL),
-    titleMenuItem(_("_Move Stream..."), true),
-    killMenuItem(_("_Terminate Stream"), true) {
+    StreamWidget(cobject, x) {
 
-    add_events(Gdk::BUTTON_PRESS_MASK);
+    gchar *txt;
+    directionLabel->set_label(txt = g_markup_printf_escaped("<i>%s</i>", _("from")));
+    g_free(txt);
 
-    menu.append(titleMenuItem);
-    titleMenuItem.set_submenu(submenu);
-
-    menu.append(killMenuItem);
-    killMenuItem.signal_activate().connect(sigc::mem_fun(*this, &SourceOutputWidget::onKill));
+    terminate.set_label(_("Terminate Recording"));
 }
 
-SourceOutputWidget::~SourceOutputWidget() {
-    clearMenu();
-}
-
-SourceOutputWidget* SourceOutputWidget::create() {
+SourceOutputWidget* SourceOutputWidget::create(MainWindow* mainWindow) {
     SourceOutputWidget* w;
     Glib::RefPtr<Gnome::Glade::Xml> x = Gnome::Glade::Xml::create(GLADE_FILE, "streamWidget");
     x->get_widget_derived("streamWidget", w);
+    w->init(mainWindow);
     return w;
+}
+
+SourceOutputWidget::~SourceOutputWidget(void) {
+  clearMenu();
+}
+
+void SourceOutputWidget::setSourceIndex(uint32_t idx) {
+    mSourceIndex = idx;
+
+    if (mpMainWindow->sourceWidgets.count(idx)) {
+      SourceWidget *w = mpMainWindow->sourceWidgets[idx];
+      deviceButton->set_label(w->description.c_str());
+    }
+    else
+      deviceButton->set_label(_("Unknown input"));
+}
+
+uint32_t SourceOutputWidget::sourceIndex() {
+    return mSourceIndex;
 }
 
 void SourceOutputWidget::onKill() {
@@ -64,43 +75,45 @@ void SourceOutputWidget::onKill() {
     pa_operation_unref(o);
 }
 
-void SourceOutputWidget::clearMenu() {
 
-    while (!sourceMenuItems.empty()) {
-        std::map<uint32_t, SourceMenuItem*>::iterator i = sourceMenuItems.begin();
-        delete i->second;
-        sourceMenuItems.erase(i);
-    }
+void SourceOutputWidget::clearMenu() {
+  while (!sourceMenuItems.empty()) {
+    std::map<uint32_t, SourceMenuItem*>::iterator i = sourceMenuItems.begin();
+    delete i->second;
+    sourceMenuItems.erase(i);
+  }
 }
 
 void SourceOutputWidget::buildMenu() {
-    for (std::map<uint32_t, SourceWidget*>::iterator i = mainWindow->sourceWidgets.begin(); i != mainWindow->sourceWidgets.end(); ++i) {
-        SourceMenuItem *m;
-        sourceMenuItems[i->second->index] = m = new SourceMenuItem(this, i->second->description.c_str(), i->second->index, i->second->index == sourceIndex);
-        submenu.append(m->menuItem);
-    }
-
-    menu.show_all();
-}
-
-void SourceOutputWidget::prepareMenu(void) {
-  clearMenu();
-  buildMenu();
+  for (std::map<uint32_t, SourceWidget*>::iterator i = mpMainWindow->sourceWidgets.begin(); i != mpMainWindow->sourceWidgets.end(); ++i) {
+    SourceMenuItem *m;
+    sourceMenuItems[i->second->index] = m = new SourceMenuItem(this, i->second->description.c_str(), i->second->index, i->second->index == mSourceIndex);
+    menu.append(m->menuItem);
+  }
+  menu.show_all();
 }
 
 void SourceOutputWidget::SourceMenuItem::onToggle() {
+  if (widget->updating)
+    return;
 
-    if (widget->updating)
-        return;
+  if (!menuItem.get_active())
+    return;
 
-    if (!menuItem.get_active())
-        return;
+  /*if (!mpMainWindow->sourceWidgets.count(widget->index))
+    return;*/
 
-    pa_operation* o;
-    if (!(o = pa_context_move_source_output_by_index(get_context(), widget->index, index, NULL, NULL))) {
-        show_error(_("pa_context_move_source_output_by_index() failed"));
-        return;
-    }
+  pa_operation* o;
+  if (!(o = pa_context_move_source_output_by_index(get_context(), widget->index, index, NULL, NULL))) {
+    show_error(_("pa_context_move_source_output_by_index() failed"));
+    return;
+  }
 
-    pa_operation_unref(o);
+  pa_operation_unref(o);
+}
+
+void SourceOutputWidget::onDeviceChangePopup() {
+    clearMenu();
+    buildMenu();
+    menu.popup(1, 0);
 }

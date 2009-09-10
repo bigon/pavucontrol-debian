@@ -37,10 +37,34 @@
 
 /* Used for profile sorting */
 struct profile_prio_compare {
-    bool operator() (const pa_card_profile_info& lhs, const pa_card_profile_info& rhs) const
-    {return lhs.priority>rhs.priority;}
+    bool operator() (const pa_card_profile_info& lhs, const pa_card_profile_info& rhs) const {
+
+        if (lhs.priority == rhs.priority)
+            return strcmp(lhs.name, rhs.name) > 0;
+
+        return lhs.priority > rhs.priority;
+    }
 };
 
+struct sink_port_prio_compare {
+    bool operator() (const pa_sink_port_info& lhs, const pa_sink_port_info& rhs) const {
+
+        if (lhs.priority == rhs.priority)
+            return strcmp(lhs.name, rhs.name) > 0;
+
+        return lhs.priority > rhs.priority;
+    }
+};
+
+struct source_port_prio_compare {
+    bool operator() (const pa_source_port_info& lhs, const pa_source_port_info& rhs) const {
+
+        if (lhs.priority == rhs.priority)
+            return strcmp(lhs.name, rhs.name) > 0;
+
+        return lhs.priority > rhs.priority;
+    }
+};
 
 MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x) :
     Gtk::Window(cobject),
@@ -111,12 +135,17 @@ static void set_icon_name_fallback(Gtk::Image *i, const char *name, Gtk::IconSiz
 
     Gtk::IconSize::lookup(size, width, height);
     theme = Gtk::IconTheme::get_default();
-    pixbuf = theme->load_icon(name, width, Gtk::ICON_LOOKUP_GENERIC_FALLBACK);
 
-    if (pixbuf)
-        i->set(pixbuf);
-    else
+    try {
+        pixbuf = theme->load_icon(name, width, Gtk::ICON_LOOKUP_GENERIC_FALLBACK);
+
+        if (pixbuf)
+            i->set(pixbuf);
+        else
+            i->set(name);
+    } catch (Gtk::IconThemeError &e) {
         i->set(name);
+    }
 }
 
 void MainWindow::updateCard(const pa_card_info &info) {
@@ -150,11 +179,12 @@ void MainWindow::updateCard(const pa_card_info &info) {
         w->hasSources = w->hasSources || (info.profiles[i].n_sources > 0);
         profile_priorities.insert(info.profiles[i]);
     }
+
     w->profiles.clear();
-    for (std::set<pa_card_profile_info>::iterator i=profile_priorities.begin(); i != profile_priorities.end(); ++i) {
-        w->profiles.push_back(std::pair<Glib::ustring,Glib::ustring>(i->name,i->description));
-    }
-    w->activeProfile = info.active_profile->name;
+    for (std::set<pa_card_profile_info>::iterator i = profile_priorities.begin(); i != profile_priorities.end(); ++i)
+        w->profiles.push_back(std::pair<Glib::ustring,Glib::ustring>(i->name, i->description));
+
+    w->activeProfile = info.active_profile ? info.active_profile->name : "";
 
     w->updating = false;
 
@@ -168,12 +198,12 @@ void MainWindow::updateSink(const pa_sink_info &info) {
     SinkWidget *w;
     bool is_new = false;
     const char *icon;
+    std::set<pa_sink_port_info,sink_port_prio_compare> port_priorities;
 
     if (sinkWidgets.count(info.index))
         w = sinkWidgets[info.index];
     else {
         sinkWidgets[info.index] = w = SinkWidget::create();
-        w->beepDevice = info.name;
         w->setChannelMap(info.channel_map, !!(info.flags & PA_SINK_DECIBEL_VOLUME));
         sinksVBox->pack_start(*w, false, false, 0);
         w->index = info.index;
@@ -202,9 +232,22 @@ void MainWindow::updateSink(const pa_sink_info &info) {
     w->setVolume(info.volume);
     w->muteToggleButton->set_active(info.mute);
 
-    w->defaultMenuItem.set_active(w->name == defaultSinkName);
+    w->setDefault(w->name == defaultSinkName);
+
+    port_priorities.clear();
+    for (uint32_t i=0; i<info.n_ports; ++i) {
+        port_priorities.insert(*info.ports[i]);
+    }
+
+    w->ports.clear();
+    for (std::set<pa_sink_port_info>::iterator i = port_priorities.begin(); i != port_priorities.end(); ++i)
+        w->ports.push_back(std::pair<Glib::ustring,Glib::ustring>(i->name, i->description));
+
+    w->activePort = info.active_port ? info.active_port->name : "";
 
     w->updating = false;
+
+    w->prepareMenu();
 
     if (is_new)
         updateDeviceVisibility();
@@ -315,6 +358,7 @@ void MainWindow::updateSource(const pa_source_info &info) {
     SourceWidget *w;
     bool is_new = false;
     const char *icon;
+    std::set<pa_source_port_info,source_port_prio_compare> port_priorities;
 
     if (sourceWidgets.count(info.index))
         w = sourceWidgets[info.index];
@@ -350,9 +394,22 @@ void MainWindow::updateSource(const pa_source_info &info) {
     w->setVolume(info.volume);
     w->muteToggleButton->set_active(info.mute);
 
-    w->defaultMenuItem.set_active(w->name == defaultSourceName);
+    w->setDefault(w->name == defaultSourceName);
+
+    port_priorities.clear();
+    for (uint32_t i=0; i<info.n_ports; ++i) {
+        port_priorities.insert(*info.ports[i]);
+    }
+
+    w->ports.clear();
+    for (std::set<pa_source_port_info>::iterator i = port_priorities.begin(); i != port_priorities.end(); ++i)
+        w->ports.push_back(std::pair<Glib::ustring,Glib::ustring>(i->name, i->description));
+
+    w->activePort = info.active_port ? info.active_port->name : "";
 
     w->updating = false;
+
+    w->prepareMenu();
 
     if (is_new)
         updateDeviceVisibility();
@@ -396,7 +453,7 @@ void MainWindow::setIconFromProplist(Gtk::Image *icon, pa_proplist *l, const cha
 
 finish:
 
-    icon->set_from_icon_name(t, Gtk::ICON_SIZE_SMALL_TOOLBAR);
+    set_icon_name_fallback(icon, t, Gtk::ICON_SIZE_SMALL_TOOLBAR);
 }
 
 void MainWindow::updateSinkInput(const pa_sink_input_info &info) {
@@ -406,12 +463,11 @@ void MainWindow::updateSinkInput(const pa_sink_input_info &info) {
     if (sinkInputWidgets.count(info.index))
         w = sinkInputWidgets[info.index];
     else {
-        sinkInputWidgets[info.index] = w = SinkInputWidget::create();
+        sinkInputWidgets[info.index] = w = SinkInputWidget::create(this);
         w->setChannelMap(info.channel_map, true);
         streamsVBox->pack_start(*w, false, false, 0);
         w->index = info.index;
         w->clientIndex = info.client;
-        w->mainWindow = this;
         is_new = true;
 
         if (pa_context_get_server_protocol_version(get_context()) >= 13)
@@ -422,7 +478,7 @@ void MainWindow::updateSinkInput(const pa_sink_input_info &info) {
 
     w->type = info.client != PA_INVALID_INDEX ? SINK_INPUT_CLIENT : SINK_INPUT_VIRTUAL;
 
-    w->sinkIndex = info.sink;
+    w->setSinkIndex(info.sink);
 
     char *txt;
     if (clientNames.count(info.client)) {
@@ -458,18 +514,17 @@ void MainWindow::updateSourceOutput(const pa_source_output_info &info) {
     if (sourceOutputWidgets.count(info.index))
         w = sourceOutputWidgets[info.index];
     else {
-        sourceOutputWidgets[info.index] = w = SourceOutputWidget::create();
+        sourceOutputWidgets[info.index] = w = SourceOutputWidget::create(this);
         recsVBox->pack_start(*w, false, false, 0);
         w->index = info.index;
         w->clientIndex = info.client;
-        w->mainWindow = this;
     }
 
     w->updating = true;
 
     w->type = info.client != PA_INVALID_INDEX ? SOURCE_OUTPUT_CLIENT : SOURCE_OUTPUT_VIRTUAL;
 
-    w->sourceIndex = info.source;
+    w->setSourceIndex(info.source);
 
     char *txt;
     if (clientNames.count(info.client)) {
@@ -521,7 +576,8 @@ void MainWindow::updateServer(const pa_server_info &info) {
             continue;
 
         w->updating = true;
-        w->defaultMenuItem.set_active(w->name == defaultSinkName);
+        w->setDefault(w->name == defaultSinkName);
+
         w->updating = false;
     }
 
@@ -532,7 +588,7 @@ void MainWindow::updateServer(const pa_server_info &info) {
             continue;
 
         w->updating = true;
-        w->defaultMenuItem.set_active(w->name == defaultSourceName);
+        w->setDefault(w->name == defaultSourceName);
         w->updating = false;
     }
 }
@@ -633,7 +689,7 @@ void MainWindow::updateVolumeMeter(uint32_t source_index, uint32_t sink_input_id
         for (std::map<uint32_t, SourceOutputWidget*>::iterator i = sourceOutputWidgets.begin(); i != sourceOutputWidgets.end(); ++i) {
             SourceOutputWidget* w = i->second;
 
-            if (w->sourceIndex == source_index)
+            if (w->sourceIndex() == source_index)
                 w->updatePeak(v);
         }
     }
@@ -661,6 +717,14 @@ void MainWindow::reallyUpdateDeviceVisibility() {
     for (std::map<uint32_t, SinkInputWidget*>::iterator i = sinkInputWidgets.begin(); i != sinkInputWidgets.end(); ++i) {
         SinkInputWidget* w = i->second;
 
+        if (sinkWidgets.size() > 1) {
+            w->directionLabel->show();
+            w->deviceButton->show();
+        } else {
+            w->directionLabel->hide();
+            w->deviceButton->hide();
+        }
+
         if (showSinkInputType == SINK_INPUT_ALL || w->type == showSinkInputType) {
             w->show();
             is_empty = false;
@@ -680,6 +744,14 @@ void MainWindow::reallyUpdateDeviceVisibility() {
 
     for (std::map<uint32_t, SourceOutputWidget*>::iterator i = sourceOutputWidgets.begin(); i != sourceOutputWidgets.end(); ++i) {
         SourceOutputWidget* w = i->second;
+
+        if (sourceWidgets.size() > 1) {
+            w->directionLabel->show();
+            w->deviceButton->show();
+        } else {
+            w->directionLabel->hide();
+            w->deviceButton->hide();
+        }
 
         if (showSourceOutputType == SOURCE_OUTPUT_ALL || w->type == showSourceOutputType) {
             w->show();

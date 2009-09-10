@@ -10,7 +10,7 @@
 <body>
 <h1><a name="top">PulseAudio Volume Control @PACKAGE_VERSION@</a></h1>
 
-<p><i>Copyright 2006-2008 Lennart Poettering &lt;@PACKAGE_BUGREPORT@&gt;</i></p>
+<p><i>Copyright 2006-2009 Lennart Poettering &lt;@PACKAGE_BUGREPORT@&gt;</i></p>
 
 <ul class="toc">
     <li><a href="#license">License</a></li>
@@ -37,6 +37,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 General Public License for more details.</p>
 
 <h2><a name="news">News</a></h2>
+
+<div class="news-date">Thu Sep 10
+2009: </div> <p class="news-text"><a href="@PACKAGE_URL@pavucontrol-0.9.9.tar.gz">Version
+0.9.9</a> released; allow configuring device ports; various updates.</p>
 
 <div class="news-date">Mon Apr 13
 2009: </div> <p class="news-text"><a href="@PACKAGE_URL@pavucontrol-0.9.8.tar.gz">Version
@@ -106,7 +110,7 @@ source code configuration.</p>
 
 <p><tt>pavucontrol</tt> requires <a href="http://gtkmm.sf.net/"><tt>gtkmm</tt></a> and <tt>glademmm</tt> installed.</p>
 
-<p>Obviously <tt>pavucontrol</tt> requires an installation of <a href="http://pulseaudio.org/">PulseAudio</a> (version 0.9.15).</p>
+<p>Obviously <tt>pavucontrol</tt> requires an installation of <a href="http://pulseaudio.org/">PulseAudio</a> (version 0.9.16).</p>
 
 <h2><a name="installation">Installation</a></h2>
 
@@ -118,7 +122,7 @@ compilation and <tt>make install</tt> (as root) for installation of
 
 <h2><a name="acks">Acknowledgements</a></h2>
 
-<p>Coling Guthrie for the card profile UI and other work</p>
+<p>Colin Guthrie for the card profile UI and other work</p>
 
 <h2><a name="download">Download</a></h2>
 
@@ -131,7 +135,7 @@ compilation and <tt>make install</tt> (as root) for installation of
 <pre>git clone git://git.0pointer.de/pavucontrol</pre>
 
 <hr/>
-<address class="grey">Lennart Poettering &lt;@PACKAGE_BUGREPORT@&gt;, April 2009</address>
+<address class="grey">Lennart Poettering &lt;@PACKAGE_BUGREPORT@&gt;, September 2009</address>
 
 </body>
 </html>

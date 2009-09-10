@@ -22,31 +22,27 @@
 #include <config.h>
 #endif
 
+#include <canberra-gtk.h>
+
 #include "sinkwidget.h"
 
 #include "i18n.h"
 
 SinkWidget::SinkWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x) :
-    StreamWidget(cobject, x),
-    defaultMenuItem("_Default", true){
-
-    add_events(Gdk::BUTTON_PRESS_MASK);
-
-    defaultMenuItem.set_active(false);
-    defaultMenuItem.signal_toggled().connect(sigc::mem_fun(*this, &SinkWidget::onDefaultToggle));
-    menu.append(defaultMenuItem);
-    menu.show_all();
+    DeviceWidget(cobject, x) {
 }
 
 SinkWidget* SinkWidget::create() {
     SinkWidget* w;
-    Glib::RefPtr<Gnome::Glade::Xml> x = Gnome::Glade::Xml::create(GLADE_FILE, "streamWidget");
-    x->get_widget_derived("streamWidget", w);
+    Glib::RefPtr<Gnome::Glade::Xml> x = Gnome::Glade::Xml::create(GLADE_FILE, "deviceWidget");
+    x->get_widget_derived("deviceWidget", w);
     return w;
 }
 
 void SinkWidget::executeVolumeUpdate() {
     pa_operation* o;
+    char dev[64];
+    int playing = 0;
 
     if (!(o = pa_context_set_sink_volume_by_index(get_context(), index, &volume, NULL, NULL))) {
         show_error(_("pa_context_set_sink_volume_by_index() failed"));
@@ -54,10 +50,27 @@ void SinkWidget::executeVolumeUpdate() {
     }
 
     pa_operation_unref(o);
+
+    ca_context_playing(ca_gtk_context_get(), 2, &playing);
+    if (playing)
+        return;
+
+    snprintf(dev, sizeof(dev), "%lu", (unsigned long) index);
+    ca_context_change_device(ca_gtk_context_get(), dev);
+
+    ca_gtk_play_for_widget(GTK_WIDGET(gobj()),
+                           2,
+                           CA_PROP_EVENT_DESCRIPTION, _("Volume Control Feedback Sound"),
+                           CA_PROP_EVENT_ID, "audio-volume-change",
+                           CA_PROP_CANBERRA_CACHE_CONTROL, "permanent",
+                           CA_PROP_CANBERRA_ENABLE, "1",
+                           NULL);
+
+    ca_context_change_device(ca_gtk_context_get(), NULL);
 }
 
 void SinkWidget::onMuteToggleButton() {
-    StreamWidget::onMuteToggleButton();
+    DeviceWidget::onMuteToggleButton();
 
     if (updating)
         return;
@@ -71,7 +84,7 @@ void SinkWidget::onMuteToggleButton() {
     pa_operation_unref(o);
 }
 
-void SinkWidget::onDefaultToggle() {
+void SinkWidget::onDefaultToggleButton() {
     pa_operation* o;
 
     if (updating)
@@ -82,4 +95,27 @@ void SinkWidget::onDefaultToggle() {
         return;
     }
     pa_operation_unref(o);
+}
+
+void SinkWidget::onPortChange() {
+    Gtk::TreeModel::iterator iter;
+
+    if (updating)
+        return;
+
+    iter = portList->get_active();
+    if (iter) {
+        Gtk::TreeModel::Row row = *iter;
+        if (row) {
+            pa_operation* o;
+            Glib::ustring port = row[portModel.name];
+
+            if (!(o = pa_context_set_sink_port_by_index(get_context(), index, port.c_str(), NULL, NULL))) {
+                show_error(_("pa_context_set_sink_port_by_index() failed"));
+                return;
+            }
+
+            pa_operation_unref(o);
+        }
+    }
 }

@@ -27,21 +27,13 @@
 #include "i18n.h"
 
 SourceWidget::SourceWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x) :
-    StreamWidget(cobject, x),
-    defaultMenuItem(_("_Default"), true){
-
-    add_events(Gdk::BUTTON_PRESS_MASK);
-
-    defaultMenuItem.set_active(false);
-    defaultMenuItem.signal_toggled().connect(sigc::mem_fun(*this, &SourceWidget::onDefaultToggle));
-    menu.append(defaultMenuItem);
-    menu.show_all();
+    DeviceWidget(cobject, x) {
 }
 
 SourceWidget* SourceWidget::create() {
     SourceWidget* w;
-    Glib::RefPtr<Gnome::Glade::Xml> x = Gnome::Glade::Xml::create(GLADE_FILE, "streamWidget");
-    x->get_widget_derived("streamWidget", w);
+    Glib::RefPtr<Gnome::Glade::Xml> x = Gnome::Glade::Xml::create(GLADE_FILE, "deviceWidget");
+    x->get_widget_derived("deviceWidget", w);
     return w;
 }
 
@@ -57,7 +49,7 @@ void SourceWidget::executeVolumeUpdate() {
 }
 
 void SourceWidget::onMuteToggleButton() {
-    StreamWidget::onMuteToggleButton();
+    DeviceWidget::onMuteToggleButton();
 
     if (updating)
         return;
@@ -71,7 +63,7 @@ void SourceWidget::onMuteToggleButton() {
     pa_operation_unref(o);
 }
 
-void SourceWidget::onDefaultToggle() {
+void SourceWidget::onDefaultToggleButton() {
     pa_operation* o;
 
     if (updating)
@@ -82,4 +74,29 @@ void SourceWidget::onDefaultToggle() {
         return;
     }
     pa_operation_unref(o);
+}
+
+void SourceWidget::onPortChange() {
+  Gtk::TreeModel::iterator iter;
+
+  if (updating)
+    return;
+
+  iter = portList->get_active();
+  if (iter)
+  {
+    Gtk::TreeModel::Row row = *iter;
+    if (row)
+    {
+      pa_operation* o;
+      Glib::ustring port = row[portModel.name];
+
+      if (!(o = pa_context_set_source_port_by_index(get_context(), index, port.c_str(), NULL, NULL))) {
+        show_error(_("pa_context_set_source_port_by_index() failed"));
+        return;
+      }
+
+      pa_operation_unref(o);
+    }
+  }
 }

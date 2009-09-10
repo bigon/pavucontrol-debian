@@ -23,7 +23,7 @@
 #endif
 
 #include "channelwidget.h"
-#include "streamwidget.h"
+#include "minimalstreamwidget.h"
 
 #include "i18n.h"
 
@@ -83,28 +83,11 @@ void ChannelWidget::onVolumeScaleValueChanged() {
     if (!volumeScaleEnabled)
         return;
 
-    if (streamWidget->updating)
+    if (minimalStreamWidget->updating)
         return;
 
     pa_volume_t volume = (pa_volume_t) ((volumeScale->get_value() * PA_VOLUME_NORM) / 100);
-    streamWidget->updateChannelVolume(channel, volume);
-
-    if (beepDevice != "") {
-        ca_context_change_device(ca_gtk_context_get(), beepDevice.c_str());
-
-        ca_context_cancel(ca_gtk_context_get(), 2);
-
-        ca_gtk_play_for_widget(GTK_WIDGET(volumeScale->gobj()),
-                               2,
-                               CA_PROP_EVENT_DESCRIPTION, _("Volume Control Feedback Sound"),
-                               CA_PROP_EVENT_ID, "audio-volume-change",
-                               CA_PROP_CANBERRA_CACHE_CONTROL, "permanent",
-                               CA_PROP_CANBERRA_VOLUME, "0",
-                               CA_PROP_CANBERRA_ENABLE, "1",
-                               NULL);
-
-        ca_context_change_device(ca_gtk_context_get(), NULL);
-    }
+    minimalStreamWidget->updateChannelVolume(channel, volume);
 }
 
 void ChannelWidget::set_sensitive(bool enabled) {
@@ -117,7 +100,8 @@ void ChannelWidget::set_sensitive(bool enabled) {
 
 void ChannelWidget::setBaseVolume(pa_volume_t v) {
 
-    gtk_scale_add_mark(GTK_SCALE(volumeScale->gobj()), 0.0, (GtkPositionType) GTK_POS_BOTTOM, _("<small>Silence</small>"));
+    gtk_scale_add_mark(GTK_SCALE(volumeScale->gobj()), 0.0, (GtkPositionType) GTK_POS_BOTTOM,
+                       can_decibel ? _("<small>Silence</small>") : _("<small>Min</small>"));
     gtk_scale_add_mark(GTK_SCALE(volumeScale->gobj()), 100.0, (GtkPositionType) GTK_POS_BOTTOM, _("<small>Max</small>"));
 
     if (v > PA_VOLUME_MUTED && v < PA_VOLUME_NORM) {

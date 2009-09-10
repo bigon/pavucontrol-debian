@@ -19,7 +19,7 @@
 # along with pavucontrol. If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.62)
-AC_INIT([pavucontrol],[0.9.8],[mzcnihpbageby (at) 0pointer (dot) de])
+AC_INIT([pavucontrol],[0.9.9],[mzcnihpbageby (at) 0pointer (dot) de])
 AC_CONFIG_SRCDIR([src/pavucontrol.cc])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS([config.h])
@@ -39,7 +39,7 @@ AC_PROG_LN_S
 AC_TYPE_SIGNAL
 AC_HEADER_STDC
 
-PKG_CHECK_MODULES(GUILIBS, [ gtkmm-2.4 libglademm-2.4 sigc++-2.0 libcanberra-gtk >= 0.11 ])
+PKG_CHECK_MODULES(GUILIBS, [ gtkmm-2.4 libglademm-2.4 sigc++-2.0 libcanberra-gtk >= 0.16 ])
 AC_SUBST(GUILIBS_CFLAGS)
 AC_SUBST(GUILIBS_LIBS)
 

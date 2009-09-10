@@ -23,9 +23,9 @@
 
 #include "pavucontrol.h"
 
-#include "streamwidget.h"
+#include "devicewidget.h"
 
-class SinkWidget : public StreamWidget {
+class SinkWidget : public DeviceWidget {
 public:
     SinkWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x);
     static SinkWidget* create();
@@ -36,11 +36,12 @@ public:
     uint32_t index, monitor_index, card_index;
     bool can_decibel;
 
-    Gtk::CheckMenuItem defaultMenuItem;
-
     virtual void onMuteToggleButton();
     virtual void executeVolumeUpdate();
-    virtual void onDefaultToggle();
+    virtual void onDefaultToggleButton();
+
+protected:
+    virtual void onPortChange();
 };
 
 #endif

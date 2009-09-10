@@ -23,20 +23,45 @@
 #endif
 
 #include "streamwidget.h"
+#include "mainwindow.h"
 #include "channelwidget.h"
 
-/*** StreamWidget ***/
+#include "i18n.h"
 
+/*** StreamWidget ***/
 StreamWidget::StreamWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x) :
-    MinimalStreamWidget(cobject, x)  {
+    MinimalStreamWidget(cobject, x),
+    mpMainWindow(NULL) {
 
     x->get_widget("lockToggleButton", lockToggleButton);
     x->get_widget("muteToggleButton", muteToggleButton);
+    x->get_widget("directionLabel", directionLabel);
+    x->get_widget("deviceButton", deviceButton);
 
+    this->signal_button_press_event().connect(sigc::mem_fun(*this, &StreamWidget::onContextTriggerEvent));
     muteToggleButton->signal_clicked().connect(sigc::mem_fun(*this, &StreamWidget::onMuteToggleButton));
+    deviceButton->signal_clicked().connect(sigc::mem_fun(*this, &StreamWidget::onDeviceChangePopup));
+
+    terminate.set_label(_("Terminate"));
+    terminate.signal_activate().connect(sigc::mem_fun(*this, &StreamWidget::onKill));
+    contextMenu.append(terminate);
+    contextMenu.show_all();
 
     for (unsigned i = 0; i < PA_CHANNELS_MAX; i++)
         channelWidgets[i] = NULL;
+}
+
+
+void StreamWidget::init(MainWindow* mainWindow) {
+    mpMainWindow = mainWindow;
+}
+
+bool StreamWidget::onContextTriggerEvent(GdkEventButton* event) {
+    if (GDK_BUTTON_PRESS == event->type && 3 == event->button) {
+        contextMenu.popup(event->button, event->time);
+        return true;
+    }
+    return false;
 }
 
 void StreamWidget::setChannelMap(const pa_channel_map &m, bool can_decibel) {
@@ -44,10 +69,9 @@ void StreamWidget::setChannelMap(const pa_channel_map &m, bool can_decibel) {
 
     for (int i = 0; i < m.channels; i++) {
         ChannelWidget *cw = channelWidgets[i] = ChannelWidget::create();
-        cw->beepDevice = beepDevice;
         cw->channel = i;
         cw->can_decibel = can_decibel;
-        cw->streamWidget = this;
+        cw->minimalStreamWidget = this;
         char text[64];
         snprintf(text, sizeof(text), "<b>%s</b>", pa_channel_position_to_pretty_string(m.map[i]));
         cw->channelLabel->set_markup(text);
@@ -101,15 +125,8 @@ bool StreamWidget::timeoutEvent() {
 void StreamWidget::executeVolumeUpdate() {
 }
 
-
-void StreamWidget::setBaseVolume(pa_volume_t v) {
-
-    if (channelMap.channels > 0)
-        channelWidgets[channelMap.channels-1]->setBaseVolume(v);
+void StreamWidget::onDeviceChangePopup() {
 }
 
-void StreamWidget::setSteps(unsigned n) {
-
-    for (int i = 0; i < channelMap.channels; i++)
-        channelWidgets[channelMap.channels-1]->setSteps(n);
+void StreamWidget::onKill() {
 }

@@ -23,46 +23,49 @@
 
 #include "pavucontrol.h"
 
-#include "minimalstreamwidget.h"
+#include "streamwidget.h"
 
 class MainWindow;
 
-class SourceOutputWidget : public MinimalStreamWidget {
+class SourceOutputWidget : public StreamWidget {
 public:
     SourceOutputWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x);
-    static SourceOutputWidget* create();
-    virtual ~SourceOutputWidget();
+    static SourceOutputWidget* create(MainWindow* mainWindow);
+    ~SourceOutputWidget(void);
 
     SourceOutputType type;
 
-    uint32_t index, clientIndex, sourceIndex;
+    uint32_t index, clientIndex;
+    void setSourceIndex(uint32_t idx);
+    uint32_t sourceIndex();
+    virtual void onDeviceChangePopup();
     virtual void onKill();
 
-    MainWindow *mainWindow;
-    Gtk::Menu submenu;
-    Gtk::MenuItem titleMenuItem, killMenuItem;
-
-    struct SourceMenuItem {
-        SourceMenuItem(SourceOutputWidget *w, const char *label, uint32_t i, bool active) :
-            widget(w),
-            menuItem(label),
-            index(i) {
-            menuItem.set_active(active);
-            menuItem.set_draw_as_radio(true);
-            menuItem.signal_toggled().connect(sigc::mem_fun(*this, &SourceMenuItem::onToggle));
-        }
-
-        SourceOutputWidget *widget;
-        Gtk::CheckMenuItem menuItem;
-        uint32_t index;
-        void onToggle();
-    };
-
-    std::map<uint32_t, SourceMenuItem*> sourceMenuItems;
+private:
+    uint32_t mSourceIndex;
 
     void clearMenu();
     void buildMenu();
-    virtual void prepareMenu();
+
+    Gtk::Menu menu;
+
+    struct SourceMenuItem {
+      SourceMenuItem(SourceOutputWidget *w, const char *label, uint32_t i, bool active) :
+      widget(w),
+      menuItem(label),
+      index(i) {
+        menuItem.set_active(active);
+        menuItem.set_draw_as_radio(true);
+        menuItem.signal_toggled().connect(sigc::mem_fun(*this, &SourceMenuItem::onToggle));
+      }
+
+      SourceOutputWidget *widget;
+      Gtk::CheckMenuItem menuItem;
+      uint32_t index;
+      void onToggle();
+    };
+
+    std::map<uint32_t, SourceMenuItem*> sourceMenuItems;
 };
 
 #endif
