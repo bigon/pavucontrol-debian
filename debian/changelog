@@ -1,9 +1,9 @@
-pavucontrol (0.9.9-1) UNRELEASED; urgency=low
+pavucontrol (0.9.9-1) unstable; urgency=low
 
   * New Upstream Version
   * debian/control: Bump libcanberra-gtk build-dep to >= 0.16
 
- -- Sjoerd Simons <sjoerd@debian.org>  Sun, 27 Sep 2009 18:27:26 +0200
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 27 Sep 2009 23:47:23 +0200
 
 pavucontrol (0.9.8-1) unstable; urgency=low
 
