@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 5), cdbs, autotools-dev,
                asciidoc,
                xmlto,
                quilt,
-               libcanberra-gtk-dev,
+               libcanberra-gtk-dev (>= 0.16),
                intltool
 Standards-Version: 3.7.2
 Vcs-Git: git://git.debian.org/git/pkg-pulseaudio/pavucontrol.git
