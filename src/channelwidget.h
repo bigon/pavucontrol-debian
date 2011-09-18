@@ -27,7 +27,7 @@ class MinimalStreamWidget;
 
 class ChannelWidget : public Gtk::EventBox {
 public:
-    ChannelWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x);
+    ChannelWidget(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& x);
     static ChannelWidget* create();
 
     void setVolume(pa_volume_t volume);
@@ -43,10 +43,10 @@ public:
 
     bool can_decibel;
     bool volumeScaleEnabled;
+    bool last;
 
     virtual void set_sensitive(bool enabled);
     virtual void setBaseVolume(pa_volume_t);
-    virtual void setSteps(unsigned n);
 };
 
 

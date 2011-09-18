@@ -25,15 +25,20 @@
 
 #include "minimalstreamwidget.h"
 
+class MainWindow;
 class ChannelWidget;
 
 class DeviceWidget : public MinimalStreamWidget {
 public:
-    DeviceWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x);
+    DeviceWidget(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& x);
+    void init(MainWindow* mainWindow, Glib::ustring);
 
     void setChannelMap(const pa_channel_map &m, bool can_decibel);
     void setVolume(const pa_cvolume &volume, bool force = false);
     virtual void updateChannelVolume(int channel, pa_volume_t v);
+
+    Glib::ustring name;
+    Glib::ustring description;
 
     Gtk::ToggleButton *lockToggleButton, *muteToggleButton, *defaultToggleButton;
 
@@ -45,6 +50,7 @@ public:
     virtual void onMuteToggleButton();
     virtual void onDefaultToggleButton();
     virtual void setDefault(bool isDefault);
+    virtual bool onContextTriggerEvent(GdkEventButton*);
 
     sigc::connection timeoutConnection;
 
@@ -52,15 +58,22 @@ public:
 
     virtual void executeVolumeUpdate();
     virtual void setBaseVolume(pa_volume_t v);
-    virtual void setSteps(unsigned n);
 
     std::vector< std::pair<Glib::ustring,Glib::ustring> > ports;
     Glib::ustring activePort;
 
     void prepareMenu();
 
+    void renamePopup();
+
 protected:
+    MainWindow *mpMainWindow;
+
     virtual void onPortChange() = 0;
+
+    Gtk::Menu contextMenu;
+    Gtk::MenuItem rename;
+
 
     /* Tree model columns */
     class ModelColumns : public Gtk::TreeModel::ColumnRecord
@@ -79,6 +92,10 @@ protected:
     Gtk::HBox *portSelect;
     Gtk::ComboBox *portList;
     Glib::RefPtr<Gtk::ListStore> treeModel;
+
+private:
+    Glib::ustring mDeviceType;
+
 };
 
 #endif

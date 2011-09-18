@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pavucontrol.master-tx.ml\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 04:15+0200\n"
-"PO-Revision-Date: 2009-05-06 13:10+0530\n"
+"POT-Creation-Date: 2009-10-14 17:10+0200\n"
+"PO-Revision-Date: 2009-09-10 15:50+0530\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,9 +35,8 @@ msgid "50%"
 msgstr "50%"
 
 #: ../src/pavucontrol.glade.h:3
-#, fuzzy
 msgid "<b>Port:</b>"
-msgstr "<b>പ്രൊഫൈല്‍:</b>"
+msgstr "<b>പോര്‍ട്ട്:</b>"
 
 #: ../src/pavucontrol.glade.h:4
 msgid "<b>Profile:</b>"
@@ -119,9 +118,8 @@ msgid "Card Name"
 msgstr "കാര്‍ഡിന്റെ പേരു്"
 
 #: ../src/pavucontrol.glade.h:27
-#, fuzzy
 msgid "Device"
-msgstr "_ഇന്‍പുട്ട് ഡിവൈസുകള്‍"
+msgstr "ഡിവൈസ്ള്‍"
 
 #: ../src/pavucontrol.glade.h:28
 msgid "Lock channels together"
@@ -133,7 +131,7 @@ msgstr "ഓഡിയോ നിശബ്ദമാക്കുക"
 
 #: ../src/pavucontrol.glade.h:30
 msgid "Set as fallback"
-msgstr ""
+msgstr "ഫോള്‍ബാക്കായി സജ്ജമാക്കുക"
 
 #: ../src/pavucontrol.glade.h:31
 msgid "Stream Title"
@@ -161,7 +159,7 @@ msgstr "_റിക്കോര്‍ഡ് ചെയ്യുന്നു"
 
 #: ../src/pavucontrol.glade.h:38
 msgid "direction"
-msgstr ""
+msgstr "ദിശ"
 
 #: ../src/pavucontrol.cc:73
 msgid "Card callback failure"
@@ -265,9 +263,8 @@ msgid "<small>Silence</small>"
 msgstr "<small>നിശബ്ദം</small>"
 
 #: ../src/channelwidget.cc:104
-#, fuzzy
 msgid "<small>Min</small>"
-msgstr "<small>ഏറ്റവും കൂടുതല്‍</small>"
+msgstr "<small>ഏറ്റവും കൂറഞ്ഞ</small>"
 
 #: ../src/channelwidget.cc:105
 msgid "<small>Max</small>"
@@ -293,7 +290,13 @@ msgstr "മോണിറ്ററിങ് സ്ട്രീം ഉണ്ടാ�
 msgid "Failed to connect monitoring stream"
 msgstr "മോണിറ്ററിങ് സ്ട്രീം കണക്ട് ചെയ്യുന്നതില്‍ പരാജയപ്പെട്ടു"
 
-#: ../src/mainwindow.cc:610
+#: ../src/mainwindow.cc:466
+msgid ""
+"Ignoring sink-input due to it being designated as an event and thus handled "
+"by the Event widget"
+msgstr ""
+
+#: ../src/mainwindow.cc:618
 msgid "System Sounds"
 msgstr "സിസ്റ്റം ശബ്ദങ്ങള്‍"
 
@@ -303,16 +306,15 @@ msgstr "pa_ext_stream_restore_write() പരാജയപ്പെട്ടു"
 
 #: ../src/sinkinputwidget.cc:35
 msgid "on"
-msgstr ""
+msgstr "on"
 
 #: ../src/sinkinputwidget.cc:38
-#, fuzzy
 msgid "Terminate Playback"
-msgstr "_സ്ട്രീം നിര്‍ത്തുക"
+msgstr "പ്ലേബാക്ക് നിര്‍ത്തുക"
 
 #: ../src/sinkinputwidget.cc:61
 msgid "Unknown output"
-msgstr ""
+msgstr "അപരിചിതമായ ഔട്ട്പുട്ട്"
 
 #: ../src/sinkinputwidget.cc:72
 msgid "pa_context_set_sink_input_volume() failed"
@@ -347,22 +349,20 @@ msgid "pa_context_set_default_sink() failed"
 msgstr "pa_context_set_default_sink() പരാജയപ്പെട്ടു"
 
 #: ../src/sinkwidget.cc:114
-#, fuzzy
 msgid "pa_context_set_sink_port_by_index() failed"
-msgstr "pa_context_set_sink_mute_by_index() പരാജയപ്പെട്ടു"
+msgstr "pa_context_set_sink_port_by_index() പരാജയപ്പെട്ടു"
 
 #: ../src/sourceoutputwidget.cc:35
 msgid "from"
-msgstr ""
+msgstr "നിന്നും"
 
 #: ../src/sourceoutputwidget.cc:38
-#, fuzzy
 msgid "Terminate Recording"
-msgstr "_റിക്കോര്‍ഡ് ചെയ്യുന്നു"
+msgstr "റിക്കോര്‍ഡിങ് അവസാനിപ്പിക്കുക"
 
 #: ../src/sourceoutputwidget.cc:61
 msgid "Unknown input"
-msgstr ""
+msgstr "അപരിചിതമായ ഇന്‍പുട്ട്"
 
 #: ../src/sourceoutputwidget.cc:71
 msgid "pa_context_kill_source_output() failed"
@@ -385,15 +385,10 @@ msgid "pa_context_set_default_source() failed"
 msgstr "pa_context_set_default_source() പരാജയപ്പെട്ടു"
 
 #: ../src/sourcewidget.cc:95
-#, fuzzy
 msgid "pa_context_set_source_port_by_index() failed"
-msgstr "pa_context_set_source_mute_by_index() പരാജയപ്പെട്ടു"
+msgstr "pa_context_set_source_port_by_index() പരാജയപ്പെട്ടു"
 
-#~ msgid "Open menu"
-#~ msgstr "മെനു തുറക്കുക"
-
-#~ msgid "_Move Stream..."
-#~ msgstr "_സ്ട്രീം നീക്കുക..."
-
-#~ msgid "_Default"
-#~ msgstr "_സ്വതവേയുള്ള"
+#: ../src/streamwidget.cc:45
+#, fuzzy
+msgid "Terminate"
+msgstr "പ്ലേബാക്ക് നിര്‍ത്തുക"

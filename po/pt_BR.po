@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pavucontrol\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 04:15+0200\n"
-"PO-Revision-Date: 2009-04-19 19:56-0300\n"
+"POT-Creation-Date: 2009-10-14 17:10+0200\n"
+"PO-Revision-Date: 2009-09-21 12:15-0300\n"
 "Last-Translator: Igor Pires Soares <igor@projetofedora.org>\n"
 "Language-Team: Brazilian Portuguese <fedora-trans-pt_br@redhat.com>\n"
 "MIME-Version: 1.0\n"
@@ -38,9 +38,8 @@ msgid "50%"
 msgstr "50%"
 
 #: ../src/pavucontrol.glade.h:3
-#, fuzzy
 msgid "<b>Port:</b>"
-msgstr "<b>Perfil:</b>"
+msgstr "<b>Porta:</b>"
 
 #: ../src/pavucontrol.glade.h:4
 msgid "<b>Profile:</b>"
@@ -122,9 +121,8 @@ msgid "Card Name"
 msgstr "Nome da placa"
 
 #: ../src/pavucontrol.glade.h:27
-#, fuzzy
 msgid "Device"
-msgstr "Dispositivos de _entrada"
+msgstr "Dispositivo"
 
 #: ../src/pavucontrol.glade.h:28
 msgid "Lock channels together"
@@ -136,7 +134,7 @@ msgstr "Sem áudio"
 
 #: ../src/pavucontrol.glade.h:30
 msgid "Set as fallback"
-msgstr ""
+msgstr "Definir como secundário"
 
 #: ../src/pavucontrol.glade.h:31
 msgid "Stream Title"
@@ -164,7 +162,7 @@ msgstr "_Gravando"
 
 #: ../src/pavucontrol.glade.h:38
 msgid "direction"
-msgstr ""
+msgstr "direção"
 
 #: ../src/pavucontrol.cc:73
 msgid "Card callback failure"
@@ -268,9 +266,8 @@ msgid "<small>Silence</small>"
 msgstr "<small>Silencioso</small>"
 
 #: ../src/channelwidget.cc:104
-#, fuzzy
 msgid "<small>Min</small>"
-msgstr "<small>Máximo</small>"
+msgstr "<small>Min</small>"
 
 #: ../src/channelwidget.cc:105
 msgid "<small>Max</small>"
@@ -296,7 +293,13 @@ msgstr "Falha ao criar o fluxo de monitoramento"
 msgid "Failed to connect monitoring stream"
 msgstr "Falha ao conectar o fluxo de monitoramento"
 
-#: ../src/mainwindow.cc:610
+#: ../src/mainwindow.cc:466
+msgid ""
+"Ignoring sink-input due to it being designated as an event and thus handled "
+"by the Event widget"
+msgstr ""
+
+#: ../src/mainwindow.cc:618
 msgid "System Sounds"
 msgstr "Sons do sistema"
 
@@ -306,16 +309,15 @@ msgstr "pa_ext_stream_restore_write() falhou"
 
 #: ../src/sinkinputwidget.cc:35
 msgid "on"
-msgstr ""
+msgstr "em"
 
 #: ../src/sinkinputwidget.cc:38
-#, fuzzy
 msgid "Terminate Playback"
-msgstr "_Cancelar fluxo"
+msgstr "Terminar reprodução"
 
 #: ../src/sinkinputwidget.cc:61
 msgid "Unknown output"
-msgstr ""
+msgstr "Saída desconhecida"
 
 #: ../src/sinkinputwidget.cc:72
 msgid "pa_context_set_sink_input_volume() failed"
@@ -350,22 +352,20 @@ msgid "pa_context_set_default_sink() failed"
 msgstr "pa_context_set_default_sink() falhou"
 
 #: ../src/sinkwidget.cc:114
-#, fuzzy
 msgid "pa_context_set_sink_port_by_index() failed"
-msgstr "pa_context_set_sink_mute_by_index() falhou"
+msgstr "pa_context_set_sink_port_by_index() falhou"
 
 #: ../src/sourceoutputwidget.cc:35
 msgid "from"
-msgstr ""
+msgstr "de"
 
 #: ../src/sourceoutputwidget.cc:38
-#, fuzzy
 msgid "Terminate Recording"
-msgstr "_Gravando"
+msgstr "Terminar gravação"
 
 #: ../src/sourceoutputwidget.cc:61
 msgid "Unknown input"
-msgstr ""
+msgstr "Entrada desconhecida"
 
 #: ../src/sourceoutputwidget.cc:71
 msgid "pa_context_kill_source_output() failed"
@@ -388,9 +388,13 @@ msgid "pa_context_set_default_source() failed"
 msgstr "pa_context_set_default_source() falhou"
 
 #: ../src/sourcewidget.cc:95
-#, fuzzy
 msgid "pa_context_set_source_port_by_index() failed"
-msgstr "pa_context_set_source_mute_by_index() falhou"
+msgstr "pa_context_set_source_port_by_index() falhou"
+
+#: ../src/streamwidget.cc:45
+#, fuzzy
+msgid "Terminate"
+msgstr "Terminar reprodução"
 
 #~ msgid "Open menu"
 #~ msgstr "Abrir menu"

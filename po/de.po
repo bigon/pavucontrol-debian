@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pavucontrol\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 04:15+0200\n"
-"PO-Revision-Date: 2009-04-16 17:37+0100\n"
-"Last-Translator: Felix Kaechele <heffer@fedoraproject.org>\n"
+"POT-Creation-Date: 2009-10-14 17:10+0200\n"
+"PO-Revision-Date: 2009-09-14 10:05+0100\n"
+"Last-Translator: Fabian Affolter <fab@fedoraproject.org>\n"
 "Language-Team: German <fedora-trans-de@redhat.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -36,9 +36,8 @@ msgid "50%"
 msgstr "50%"
 
 #: ../src/pavucontrol.glade.h:3
-#, fuzzy
 msgid "<b>Port:</b>"
-msgstr "<b>Profil:</b>"
+msgstr "<b>Port:</b>"
 
 #: ../src/pavucontrol.glade.h:4
 msgid "<b>Profile:</b>"
@@ -58,7 +57,7 @@ msgstr "<b>_Anzeigen:</b>"
 
 #: ../src/pavucontrol.glade.h:8
 msgid "<b>left-front</b>"
-msgstr "<b>vorne links</>"
+msgstr "<b>vorne links</b>"
 
 #: ../src/pavucontrol.glade.h:9
 msgid "<i>No application is currently playing audio.</i>"
@@ -120,9 +119,8 @@ msgid "Card Name"
 msgstr "Soundkarten-Name"
 
 #: ../src/pavucontrol.glade.h:27
-#, fuzzy
 msgid "Device"
-msgstr "_Eingabegeräte"
+msgstr "Gerät"
 
 #: ../src/pavucontrol.glade.h:28
 msgid "Lock channels together"
@@ -134,7 +132,7 @@ msgstr "Stummschalten"
 
 #: ../src/pavucontrol.glade.h:30
 msgid "Set as fallback"
-msgstr ""
+msgstr "Als Ausweichoption setzen"
 
 #: ../src/pavucontrol.glade.h:31
 msgid "Stream Title"
@@ -162,7 +160,7 @@ msgstr "_Aufnahme"
 
 #: ../src/pavucontrol.glade.h:38
 msgid "direction"
-msgstr ""
+msgstr "Richtung"
 
 #: ../src/pavucontrol.cc:73
 msgid "Card callback failure"
@@ -266,9 +264,8 @@ msgid "<small>Silence</small>"
 msgstr "<small>Stumm</small>"
 
 #: ../src/channelwidget.cc:104
-#, fuzzy
 msgid "<small>Min</small>"
-msgstr "<small>Maximum</small>"
+msgstr "<small>Minimum</small>"
 
 #: ../src/channelwidget.cc:105
 msgid "<small>Max</small>"
@@ -294,7 +291,13 @@ msgstr "Erstellung des Beobachterdatenstroms gescheitert"
 msgid "Failed to connect monitoring stream"
 msgstr "Verbindungsaufbau zum Beobachterdatenstrom gescheitert"
 
-#: ../src/mainwindow.cc:610
+#: ../src/mainwindow.cc:466
+msgid ""
+"Ignoring sink-input due to it being designated as an event and thus handled "
+"by the Event widget"
+msgstr ""
+
+#: ../src/mainwindow.cc:618
 msgid "System Sounds"
 msgstr "Systemklänge"
 
@@ -304,16 +307,15 @@ msgstr "pa_ext_stream_restore_write() gescheitert"
 
 #: ../src/sinkinputwidget.cc:35
 msgid "on"
-msgstr ""
+msgstr "ein"
 
 #: ../src/sinkinputwidget.cc:38
-#, fuzzy
 msgid "Terminate Playback"
-msgstr "Spur _beenden"
+msgstr "Wiedergabe beenden"
 
 #: ../src/sinkinputwidget.cc:61
 msgid "Unknown output"
-msgstr ""
+msgstr "Unbekannte Ausgabe"
 
 #: ../src/sinkinputwidget.cc:72
 msgid "pa_context_set_sink_input_volume() failed"
@@ -348,22 +350,20 @@ msgid "pa_context_set_default_sink() failed"
 msgstr "pa_context_set_default_sink() gescheitert"
 
 #: ../src/sinkwidget.cc:114
-#, fuzzy
 msgid "pa_context_set_sink_port_by_index() failed"
-msgstr "pa_context_set_sink_mute_by_index() gescheitert"
+msgstr "pa_context_set_sink_port_by_index() gescheitert"
 
 #: ../src/sourceoutputwidget.cc:35
 msgid "from"
-msgstr ""
+msgstr "von"
 
 #: ../src/sourceoutputwidget.cc:38
-#, fuzzy
 msgid "Terminate Recording"
-msgstr "_Aufnahme"
+msgstr "Aufnahme beenden"
 
 #: ../src/sourceoutputwidget.cc:61
 msgid "Unknown input"
-msgstr ""
+msgstr "Unbekannte Eingabe"
 
 #: ../src/sourceoutputwidget.cc:71
 msgid "pa_context_kill_source_output() failed"
@@ -386,9 +386,13 @@ msgid "pa_context_set_default_source() failed"
 msgstr "pa_context_set_default_source() gescheitert"
 
 #: ../src/sourcewidget.cc:95
-#, fuzzy
 msgid "pa_context_set_source_port_by_index() failed"
-msgstr "pa_context_set_source_mute_by_index() gescheitert"
+msgstr "pa_context_set_source_port_by_index() gescheitert"
+
+#: ../src/streamwidget.cc:45
+#, fuzzy
+msgid "Terminate"
+msgstr "Wiedergabe beenden"
 
 #~ msgid "Open menu"
 #~ msgstr "Menü öffnen"
