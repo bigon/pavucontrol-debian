@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Runa Bhattacharjee <runab@fedoraproject.org>, 2009.
+# Runa Bhattacharjee <runab@redhat.com>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: pavucontrol.master-tx.bn_IN\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 04:15+0200\n"
-"PO-Revision-Date: 2009-05-26 11:26+0530\n"
-"Last-Translator: Runa Bhattacharjee <runab@fedoraproject.org>\n"
-"Language-Team: Bengali INDIA <fedora-trans-bn_in@redhat.com>\n"
+"POT-Creation-Date: 2009-10-14 17:10+0200\n"
+"PO-Revision-Date: 2009-09-10 17:07+0530\n"
+"Last-Translator: Runa Bhattacharjee <runab@redhat.com>\n"
+"Language-Team: Bengali INDIA <anubad@lists.ankur.org.in>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,9 +36,8 @@ msgid "50%"
 msgstr "৫০%"
 
 #: ../src/pavucontrol.glade.h:3
-#, fuzzy
 msgid "<b>Port:</b>"
-msgstr "<b>প্রোফাইল:</b>"
+msgstr "<b>পোর্ট:</b>"
 
 #: ../src/pavucontrol.glade.h:4
 msgid "<b>Profile:</b>"
@@ -119,9 +119,8 @@ msgid "Card Name"
 msgstr "কার্ডের নাম"
 
 #: ../src/pavucontrol.glade.h:27
-#, fuzzy
 msgid "Device"
-msgstr "ইনপুট ডিভাইস (_I)"
+msgstr "ডিভাইস"
 
 #: ../src/pavucontrol.glade.h:28
 msgid "Lock channels together"
@@ -133,7 +132,7 @@ msgstr "অডিও নিঃশব্দ করা হবে"
 
 #: ../src/pavucontrol.glade.h:30
 msgid "Set as fallback"
-msgstr ""
+msgstr "ফল-ব্যাক রূপে নির্ধারণ করুন"
 
 #: ../src/pavucontrol.glade.h:31
 msgid "Stream Title"
@@ -161,7 +160,7 @@ msgstr "রেকর্ডিং (_R)"
 
 #: ../src/pavucontrol.glade.h:38
 msgid "direction"
-msgstr ""
+msgstr "দিশা"
 
 #: ../src/pavucontrol.cc:73
 msgid "Card callback failure"
@@ -265,9 +264,8 @@ msgid "<small>Silence</small>"
 msgstr "<small>নিঃশব্দ</small>"
 
 #: ../src/channelwidget.cc:104
-#, fuzzy
 msgid "<small>Min</small>"
-msgstr "<small>সর্বাধিক</small>"
+msgstr "<small>সর্বনিম্ন</small>"
 
 #: ../src/channelwidget.cc:105
 msgid "<small>Max</small>"
@@ -293,7 +291,13 @@ msgstr "নিরীক্ষণের স্ট্রিম নির্মা�
 msgid "Failed to connect monitoring stream"
 msgstr "নিরীক্ষণের স্ট্রিম সংযুক্ত করতে ব্যর্থ"
 
-#: ../src/mainwindow.cc:610
+#: ../src/mainwindow.cc:466
+msgid ""
+"Ignoring sink-input due to it being designated as an event and thus handled "
+"by the Event widget"
+msgstr ""
+
+#: ../src/mainwindow.cc:618
 msgid "System Sounds"
 msgstr "সিস্টেমের শব্দ"
 
@@ -303,16 +307,15 @@ msgstr "pa_ext_stream_restore_write() ব্যর্থ"
 
 #: ../src/sinkinputwidget.cc:35
 msgid "on"
-msgstr ""
+msgstr "চালু"
 
 #: ../src/sinkinputwidget.cc:38
-#, fuzzy
 msgid "Terminate Playback"
-msgstr "স্ট্রিম বন্ধ করুন (_T)"
+msgstr "প্লে-ব্যাক বন্ধ করুন"
 
 #: ../src/sinkinputwidget.cc:61
 msgid "Unknown output"
-msgstr ""
+msgstr "অজানা আউটপুট"
 
 #: ../src/sinkinputwidget.cc:72
 msgid "pa_context_set_sink_input_volume() failed"
@@ -347,22 +350,20 @@ msgid "pa_context_set_default_sink() failed"
 msgstr "pa_context_set_default_sink() ব্যর্থ"
 
 #: ../src/sinkwidget.cc:114
-#, fuzzy
 msgid "pa_context_set_sink_port_by_index() failed"
-msgstr "pa_context_set_sink_mute_by_index() ব্যর্থ"
+msgstr "pa_context_set_sink_port_by_index() ব্যর্থ"
 
 #: ../src/sourceoutputwidget.cc:35
 msgid "from"
-msgstr ""
+msgstr "আরম্ভ"
 
 #: ../src/sourceoutputwidget.cc:38
-#, fuzzy
 msgid "Terminate Recording"
-msgstr "রেকর্ডিং (_R)"
+msgstr "রেকর্ডিং বন্ধ করুন"
 
 #: ../src/sourceoutputwidget.cc:61
 msgid "Unknown input"
-msgstr ""
+msgstr "অজানা ইনপুট"
 
 #: ../src/sourceoutputwidget.cc:71
 msgid "pa_context_kill_source_output() failed"
@@ -385,15 +386,10 @@ msgid "pa_context_set_default_source() failed"
 msgstr "pa_context_set_default_source() ব্যর্থ"
 
 #: ../src/sourcewidget.cc:95
-#, fuzzy
 msgid "pa_context_set_source_port_by_index() failed"
-msgstr "pa_context_set_source_mute_by_index() ব্যর্থ"
+msgstr "pa_context_set_source_port_by_index() ব্যর্থ"
 
-#~ msgid "Open menu"
-#~ msgstr "মেনু খুলুন"
-
-#~ msgid "_Move Stream..."
-#~ msgstr "স্ট্রিম স্থানান্তর... (_M)"
-
-#~ msgid "_Default"
-#~ msgstr "ডিফল্ট মান (_D)"
+#: ../src/streamwidget.cc:45
+#, fuzzy
+msgid "Terminate"
+msgstr "প্লে-ব্যাক বন্ধ করুন"

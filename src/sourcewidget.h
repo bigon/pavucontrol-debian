@@ -27,12 +27,10 @@
 
 class SourceWidget : public DeviceWidget {
 public:
-    SourceWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x);
-    static SourceWidget* create();
+    SourceWidget(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& x);
+    static SourceWidget* create(MainWindow* mainWindow);
 
     SourceType type;
-    Glib::ustring name;
-    Glib::ustring description;
     uint32_t index, card_index;
     bool can_decibel;
 

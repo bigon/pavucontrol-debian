@@ -22,26 +22,41 @@
 #define sinkwidget_h
 
 #include "pavucontrol.h"
-
 #include "devicewidget.h"
+
+#if HAVE_EXT_DEVICE_RESTORE_API
+#  include <pulse/format.h>
+
+#  define PAVU_NUM_ENCODINGS 5
+
+typedef struct {
+    pa_encoding encoding;
+    Gtk::CheckButton *widget;
+} encodingList;
+#endif
 
 class SinkWidget : public DeviceWidget {
 public:
-    SinkWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x);
-    static SinkWidget* create();
+    SinkWidget(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& x);
+    static SinkWidget* create(MainWindow* mainWindow);
 
     SinkType type;
-    Glib::ustring description;
-    Glib::ustring name;
     uint32_t index, monitor_index, card_index;
     bool can_decibel;
+
+#if HAVE_EXT_DEVICE_RESTORE_API
+    encodingList encodings[PAVU_NUM_ENCODINGS];
+    Gtk::Table *encodingSelect;
+#endif
 
     virtual void onMuteToggleButton();
     virtual void executeVolumeUpdate();
     virtual void onDefaultToggleButton();
+    void setDigital(bool);
 
 protected:
     virtual void onPortChange();
+    virtual void onEncodingsChange();
 };
 
 #endif

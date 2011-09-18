@@ -1,4 +1,200 @@
 
+2011-09-15	Colin Guthrie
+	681c996: build-sys: Prepare 0.99.2
+
+2011-08-18	Colin Guthrie
+	f58f0da: Update device format stuff for (pre-release) API changes.
+
+2011-08-18	Arun Raghavan
+	c9b307d: Check if PA_SINK_SET_FORMATS is defined before using it
+
+2011-08-16	Arun Raghavan
+	5c19f6b: Use sink flags to figure out if we can set formats
+
+2011-08-09	Colin Guthrie
+	479e7bc: Add UI to select the formats supported by the receiver attached to a digitial sink
+
+2011-08-02	Colin Guthrie
+	546e679: build-sys: Prepare 0.99.1
+
+2011-07-27	Colin Guthrie
+	e317d38: Fix strange vertical alignment of sinks/source/cards
+	2aaf332: Fix GTK Warnings under GTK3 due to combo box sizes
+
+2011-07-22	Colin Guthrie
+	0087ef0: source-output: We will officially support source output volumes in 0.99
+	ca9c74b: source-output: Don't set the channel map for the SO if we do not support SO volumes.
+	a03fa60: sink: Oops. I didn't mean to comment this out in the previous commit.
+
+2011-05-06	Colin Guthrie
+	9784b9d: stream-volumes: Support source-output volume controls now available in PA.
+
+2011-06-15	Colin Guthrie
+	50efee1: i18n: Fix markup error in de translation.
+
+2011-06-06	Colin Guthrie
+	53c38fa: Handle simple key events.
+	933b8a7: Deal more gracefully with disconnections.
+
+2011-03-26	Marc-Antoine Perennou
+	964de9f: Add support for gtkmm-3.0 and prefer it over gtkmm-2.* by default.
+
+2011-03-28	Colin Guthrie
+	26d4265: Ensure the marker for base volume is set on all channels.
+
+2011-03-09	Colin Guthrie
+	c70b048: volume: Don't bother setting the steps.
+	297af52: volume: Support volumes up to 11.
+
+2011-03-03	Colin Guthrie
+	9516b6f: ui: Remove ellipsize attribute from some labels (causes ellipsis to be displayed rather than real text)
+	099e916: ui: Resave glade file without any changes to tidy it up
+
+2011-03-03	RafaÅ MuÅ¼yÅo
+	9ce0e0a: Drop the need to use libglademm
+
+2011-01-26	Maarten Bosmans
+	5997290: Add DONT_INHIBIT_AUTO_SUSPEND flag to monitor streams
+
+2010-12-22	Colin Guthrie
+	73e5702: source-outputs: Source outputs do not support volume control, so hide the mute and lock channels buttons
+
+2010-04-22	Colin Guthrie
+	f70ff92: main: Format string fixes
+	97c9cc6: main: Add a --tab command line argument to force a given tab to be displayed.
+	870c3dd: mainwindow: Fix clearing out of clients
+	94add67: mainwindow: Save/restore window size
+
+2010-04-21	Colin Guthrie
+	95e48d5: mainwindow: Compact iterator decls
+
+2010-04-20	Colin Guthrie
+	9fe2020: main: Cleanup labels after connection rework
+	18c8945: source-outputs: Fix a bug where the 'no streams' label is sometimes shown along with the actual widget.
+	7de1820: connection: Show a nice label when connecting to PA.
+	84dc67b: main: Automatically reconnect to PA upon disconnection
+	6c0bcb4: mainwindow: Add a method to remove all widgets (e.g. on disconnect)
+	b11f0b7: streamwidget: Fix a compile warning.
+	cbcdd0f: Split out the creation of the PA context a little.
+
+2010-01-05	Lennart Poettering
+	8959744: glade: ellipsize user supplied text strings
+
+2009-10-17	Colin Guthrie
+	78f5194: Allow for the sink input peak detect to survive across sink moves.
+
+2009-09-20	Colin Guthrie
+	68e3401: Update for the latest incarnation of module-device-manager
+
+2009-06-28	Colin Guthrie
+	c813bb9: Use the correct update mode for device-restore database write
+	375c2c2: Add support for the device-manager module.
+
+2009-10-14	Lennart Poettering
+	400c69a: build-sys: prepare 0.9.10
+	9294a5e: add ja to LINGUAS
+	331cc13: run make update-po
+	a55ed16: Merge remote branch 'origin/master-tx'
+
+2009-10-09	kami911
+	a7a4a7a: Sending translation for Hungarian
+
+2009-10-03	Colin Guthrie
+	d4f1a76: volume: Set the scale properly for delta changes via mouse/keyboard.
+	b5b433e: events: Hide output streams with a stream restore designator for the event widget.
+
+2009-09-30	pmkovar
+	15b9059: Sending translation for Czech
+
+2009-09-22	shanky
+	c843654: Sending translation for Kannada
+
+2009-09-22	hyuuga
+	d750976: Sending translation for Japanese
+
+2009-09-21	mrtom
+	30dd000: Sending translation for French
+
+2009-09-21	igor
+	d4f6f2d: Sending translation for Brazilian Portuguese
+
+2009-09-21	rajesh
+	c6daa40: Sending translation for Hindi
+
+2009-09-21	feonsu
+	b7b8d0c: Sending translation for Slovak
+
+2009-09-17	Diego Elio 'Flameeyes' PettenÃ²
+	4f16907: Require at least PulseAudio 0.9.16.
+
+2009-09-16	kristho
+	0f2ccbd: Sending translation for Danish
+
+2009-09-15	ruigo
+	540a0a5: Sending translation for Portuguese
+
+2009-09-15	kmilos
+	6601088: Sending translation for Serbian (Latin)
+	5b74554: Sending translation for Serbian
+
+2009-09-15	vpv
+	26f8a8d: Sending translation for Finnish
+
+2009-09-14	fab
+	c4b5810: Sending translation for German
+
+2009-09-14	mvdz
+	4ca6e8a: Sending translation for Ukrainian
+
+2009-09-14	Lennart Poettering
+	a313200: build-sys: require at least gtkmn 2.16
+
+2009-09-13	Diego Elio 'Flameeyes' PettenÃ²
+	556bdc7: Add missing source file to POTFILES.in.
+
+2009-09-12	xconde
+	988332c: Sending translation for Catalan
+
+2009-09-12	raven
+	1aa7cf8: Sending translation for Polish
+
+2009-09-11	beckerde
+	3e88d72: Sending translation for Spanish
+
+2009-09-11	mgiri
+	0aa1831: Sending translation for Oriya
+
+2009-09-10	warrink
+	a670492: Sending translation for Dutch
+
+2009-09-10	hyuuga
+	98a4f87: Sending translation for po/ja.po
+
+2009-09-10	kkrothap
+	c36f8e0: Sending translation for Telugu
+
+2009-09-10	runab
+	0160239: Sending translation for Bengali (India)
+
+2009-09-10	rajesh
+	dc7bc69: Sending translation for Hindi
+
+2009-09-10	sandeeps
+	3971ea4: Sending translation for Marathi
+
+2009-09-10	ifelix
+	22c6242: Sending translation for Tamil
+
+2009-09-10	anipeter
+	d185632: Sending translation for Malayalam
+	48ca912: Sending translation for Malayalam
+
+2009-09-10	swkothar
+	81e3ad4: Sending translation for Gujarati
+
+2009-09-10	jassy
+	7ee3194: Sending translation for Punjabi
+
 2009-09-10	Lennart Poettering
 	32ea0f3: i18n: run make update-po
 	2c0bf47: i18n: drop ko.po since it does not include a single translated string

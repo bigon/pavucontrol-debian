@@ -19,13 +19,13 @@
 # along with pavucontrol. If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.62)
-AC_INIT([pavucontrol],[0.9.9],[mzcnihpbageby (at) 0pointer (dot) de])
+AC_INIT([pavucontrol],[0.99.2],[mzcnihpbageby (at) 0pointer (dot) de])
 AC_CONFIG_SRCDIR([src/pavucontrol.cc])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([foreign 1.9 -Wall])
 
-AC_SUBST(PACKAGE_URL, [http://0pointer.de/lennart/projects/pavucontrol/])
+AC_SUBST(PACKAGE_URL, [http://freedesktop.org/software/pulseaudio/pavucontrol/])
 
 if type -p stow > /dev/null && test -d /usr/local/stow ; then
    AC_MSG_NOTICE([*** Found /usr/local/stow: default install prefix set to /usr/local/stow/${PACKAGE_NAME}-${PACKAGE_VERSION} ***])
@@ -39,7 +39,26 @@ AC_PROG_LN_S
 AC_TYPE_SIGNAL
 AC_HEADER_STDC
 
-PKG_CHECK_MODULES(GUILIBS, [ gtkmm-2.4 libglademm-2.4 sigc++-2.0 libcanberra-gtk >= 0.16 ])
+AC_ARG_ENABLE(gtk3,
+   [AS_HELP_STRING([--disable-gtk3],
+      [Whether to build or not against gtk3 [default=yes]])],
+   [enable_gtk3=$enableval],
+   [enable_gtk3="yes"])
+
+if test "x$enable_gtk3" = "xyes"; then
+   gtkmm_ver="3.0"
+   gtkmm_min_ver="2.99"
+   canberra_ver="3"
+   AC_DEFINE([HAVE_GTK3], [1], [Define if we are building against gtk3])
+   echo "***"
+   echo "*** Attempting build in GTK3 mode. Use --disable-gtk3 to build for GTK2"
+   echo "***"
+else
+   gtkmm_ver="2.4"
+   gtkmm_min_ver="2.16"
+   canberra_ver=""
+fi
+PKG_CHECK_MODULES(GUILIBS, [ gtkmm-$gtkmm_ver >= $gtkmm_min_ver sigc++-2.0 libcanberra-gtk$canberra_ver >= 0.16 ])
 AC_SUBST(GUILIBS_CFLAGS)
 AC_SUBST(GUILIBS_LIBS)
 
@@ -48,7 +67,7 @@ if test -d ../pulseaudio ; then
    PULSE_LIBS='-L$(top_srcdir)/../pulseaudio/src/.libs -lpulse -lpulse-mainloop-glib'
    echo "*** Found pulseaudio in ../pulseaudio, using that version ***"
 else
-   PKG_CHECK_MODULES(PULSE, [ libpulse >= 0.9.15 libpulse-mainloop-glib >= 0.9.15 ])
+   PKG_CHECK_MODULES(PULSE, [ libpulse >= 0.9.16 libpulse-mainloop-glib >= 0.9.16 ])
 fi
 
 AC_SUBST(PULSE_LIBS)

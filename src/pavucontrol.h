@@ -27,13 +27,20 @@
 #include <libintl.h>
 
 #include <gtkmm.h>
-#include <libglademm.h>
 
 #include <pulse/pulseaudio.h>
 
 #ifndef GLADE_FILE
 #define GLADE_FILE "pavucontrol.glade"
 #endif
+
+/* Can be removed when PulseAudio 0.9.23 or newer is required */
+#ifndef PA_VOLUME_UI_MAX
+# define PA_VOLUME_UI_MAX (pa_sw_volume_from_dB(+11.0))
+#endif
+
+#define HAVE_SOURCE_OUTPUT_VOLUMES PA_CHECK_VERSION(0,99,0)
+#define HAVE_EXT_DEVICE_RESTORE_API PA_CHECK_VERSION(0,99,0)
 
 enum SinkInputType {
     SINK_INPUT_ALL,

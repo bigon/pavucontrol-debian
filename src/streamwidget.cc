@@ -29,8 +29,9 @@
 #include "i18n.h"
 
 /*** StreamWidget ***/
-StreamWidget::StreamWidget(BaseObjectType* cobject, const Glib::RefPtr<Gnome::Glade::Xml>& x) :
+StreamWidget::StreamWidget(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& x) :
     MinimalStreamWidget(cobject, x),
+    peak(NULL),
     mpMainWindow(NULL) {
 
     x->get_widget("lockToggleButton", lockToggleButton);
@@ -77,6 +78,8 @@ void StreamWidget::setChannelMap(const pa_channel_map &m, bool can_decibel) {
         cw->channelLabel->set_markup(text);
         channelsVBox->pack_start(*cw, false, false, 0);
     }
+    channelWidgets[m.channels-1]->last = true;
+    channelWidgets[m.channels-1]->setBaseVolume(PA_VOLUME_NORM);
 
     lockToggleButton->set_sensitive(m.channels > 1);
 }

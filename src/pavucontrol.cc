@@ -25,6 +25,7 @@
 #include <pulse/pulseaudio.h>
 #include <pulse/glib-mainloop.h>
 #include <pulse/ext-stream-restore.h>
+#include <pulse/ext-device-manager.h>
 
 #include <canberra-gtk.h>
 
@@ -41,8 +42,11 @@
 #include "rolewidget.h"
 #include "mainwindow.h"
 
-static pa_context *context = NULL;
+static pa_context* context = NULL;
+static pa_mainloop_api* api = NULL;
 static int n_outstanding = 0;
+static int default_tab = 0;
+static int reconnect_timeout = 1;
 
 void show_error(const char *txt) {
     char buf[256];
@@ -59,8 +63,10 @@ static void dec_outstanding(MainWindow *w) {
     if (n_outstanding <= 0)
         return;
 
-    if (--n_outstanding <= 0)
+    if (--n_outstanding <= 0) {
         w->get_window()->set_cursor();
+        w->setConnectionState(true);
+    }
 }
 
 void card_cb(pa_context *, const pa_card_info *i, int eol, void *userdata) {
@@ -82,7 +88,11 @@ void card_cb(pa_context *, const pa_card_info *i, int eol, void *userdata) {
     w->updateCard(*i);
 }
 
-void sink_cb(pa_context *, const pa_sink_info *i, int eol, void *userdata) {
+#if HAVE_EXT_DEVICE_RESTORE_API
+static void ext_device_restore_subscribe_cb(pa_context *c, pa_device_type_t type, uint32_t idx, void *userdata);
+#endif
+
+void sink_cb(pa_context *c, const pa_sink_info *i, int eol, void *userdata) {
     MainWindow *w = static_cast<MainWindow*>(userdata);
 
     if (eol < 0) {
@@ -98,7 +108,12 @@ void sink_cb(pa_context *, const pa_sink_info *i, int eol, void *userdata) {
         return;
     }
 
+#if HAVE_EXT_DEVICE_RESTORE_API
+    if (w->updateSink(*i))
+        ext_device_restore_subscribe_cb(c, PA_DEVICE_TYPE_SINK, i->index, w);
+#else
     w->updateSink(*i);
+#endif
 }
 
 void source_cb(pa_context *, const pa_source_info *i, int eol, void *userdata) {
@@ -155,15 +170,21 @@ void source_output_cb(pa_context *, const pa_source_output_info *i, int eol, voi
         if (n_outstanding > 0) {
             /* At this point all notebook pages have been populated, so
              * let's open one that isn't empty */
-
-            if (w->sinkInputWidgets.size() > 0)
-                w->notebook->set_current_page(0);
-            else if (w->sourceOutputWidgets.size() > 0)
-                w->notebook->set_current_page(1);
-            else if (w->sourceWidgets.size() > 0 && w->sinkWidgets.size() == 0)
-                w->notebook->set_current_page(3);
-            else
-                w->notebook->set_current_page(2);
+            if (default_tab != -1) {
+                if (default_tab < 1 || default_tab > w->notebook->get_n_pages()) {
+                    if (w->sinkInputWidgets.size() > 0)
+                        w->notebook->set_current_page(0);
+                    else if (w->sourceOutputWidgets.size() > 0)
+                        w->notebook->set_current_page(1);
+                    else if (w->sourceWidgets.size() > 0 && w->sinkWidgets.size() == 0)
+                        w->notebook->set_current_page(3);
+                    else
+                        w->notebook->set_current_page(2);
+                } else {
+                    w->notebook->set_current_page(default_tab - 1);
+                }
+                default_tab = -1;
+            }
         }
 
         dec_outstanding(w);
@@ -233,6 +254,82 @@ static void ext_stream_restore_subscribe_cb(pa_context *c, void *userdata) {
 
     if (!(o = pa_ext_stream_restore_read(c, ext_stream_restore_read_cb, w))) {
         show_error(_("pa_ext_stream_restore_read() failed"));
+        return;
+    }
+
+    pa_operation_unref(o);
+}
+
+#if HAVE_EXT_DEVICE_RESTORE_API
+void ext_device_restore_read_cb(
+        pa_context *,
+        const pa_ext_device_restore_info *i,
+        int eol,
+        void *userdata) {
+
+    MainWindow *w = static_cast<MainWindow*>(userdata);
+
+    if (eol < 0) {
+        dec_outstanding(w);
+        g_debug(_("Failed to initialize device restore extension: %s"), pa_strerror(pa_context_errno(context)));
+        return;
+    }
+
+    if (eol > 0) {
+        dec_outstanding(w);
+        return;
+    }
+
+    /* Do something with a widget when this part is written */
+    w->updateDeviceInfo(*i);
+}
+
+static void ext_device_restore_subscribe_cb(pa_context *c, pa_device_type_t type, uint32_t idx, void *userdata) {
+    MainWindow *w = static_cast<MainWindow*>(userdata);
+    pa_operation *o;
+
+    if (type != PA_DEVICE_TYPE_SINK)
+        return;
+
+    if (!(o = pa_ext_device_restore_read_formats(c, type, idx, ext_device_restore_read_cb, w))) {
+        show_error(_("pa_ext_device_restore_read_sink_formats() failed"));
+        return;
+    }
+
+    pa_operation_unref(o);
+}
+#endif
+
+void ext_device_manager_read_cb(
+        pa_context *,
+        const pa_ext_device_manager_info *,
+        int eol,
+        void *userdata) {
+
+    MainWindow *w = static_cast<MainWindow*>(userdata);
+
+    if (eol < 0) {
+        dec_outstanding(w);
+        g_debug(_("Failed to initialize device manager extension: %s"), pa_strerror(pa_context_errno(context)));
+        return;
+    }
+
+    w->canRenameDevices = true;
+
+    if (eol > 0) {
+        dec_outstanding(w);
+        return;
+    }
+
+    /* Do something with a widget when this part is written */
+}
+
+static void ext_device_manager_subscribe_cb(pa_context *c, void *userdata) {
+    MainWindow *w = static_cast<MainWindow*>(userdata);
+    pa_operation *o;
+
+    if (!(o = pa_ext_device_manager_read(c, ext_device_manager_read_cb, w))) {
+        show_error(_("pa_ext_device_manager_read() failed"));
         return;
     }
 
@@ -334,6 +431,9 @@ void subscribe_cb(pa_context *c, pa_subscription_event_type_t t, uint32_t index,
     }
 }
 
+/* Forward Declaration */
+gboolean connect_to_pulse(gpointer userdata);
+
 void context_state_callback(pa_context *c, void *userdata) {
     MainWindow *w = static_cast<MainWindow*>(userdata);
 
@@ -348,6 +448,11 @@ void context_state_callback(pa_context *c, void *userdata) {
 
         case PA_CONTEXT_READY: {
             pa_operation *o;
+
+            reconnect_timeout = 1;
+
+            /* Create event widget immediately so it's first in the list */
+            w->createEventRoleWidget();
 
             pa_context_set_subscribe_callback(c, subscribe_cb, w);
 
@@ -416,7 +521,7 @@ void context_state_callback(pa_context *c, void *userdata) {
             pa_operation_unref(o);
             n_outstanding++;
 
-            /* This call is not always supported */
+            /* These calls are not always supported */
             if ((o = pa_ext_stream_restore_read(c, ext_stream_restore_read_cb, w))) {
                 pa_operation_unref(o);
                 n_outstanding++;
@@ -429,12 +534,49 @@ void context_state_callback(pa_context *c, void *userdata) {
             } else
                 g_debug(_("Failed to initialize stream_restore extension: %s"), pa_strerror(pa_context_errno(context)));
 
+#if HAVE_EXT_DEVICE_RESTORE_API
+            /* TODO Change this to just the test function */
+            if ((o = pa_ext_device_restore_read_formats_all(c, ext_device_restore_read_cb, w))) {
+                pa_operation_unref(o);
+                n_outstanding++;
+
+                pa_ext_device_restore_set_subscribe_cb(c, ext_device_restore_subscribe_cb, w);
+
+                if ((o = pa_ext_device_restore_subscribe(c, 1, NULL, NULL)))
+                    pa_operation_unref(o);
+
+            } else
+                g_debug(_("Failed to initialize device restore extension: %s"), pa_strerror(pa_context_errno(context)));
+#endif
+
+            if ((o = pa_ext_device_manager_read(c, ext_device_manager_read_cb, w))) {
+                pa_operation_unref(o);
+                n_outstanding++;
+
+                pa_ext_device_manager_set_subscribe_cb(c, ext_device_manager_subscribe_cb, w);
+
+                if ((o = pa_ext_device_manager_subscribe(c, 1, NULL, NULL)))
+                    pa_operation_unref(o);
+
+            } else
+                g_debug(_("Failed to initialize device manager extension: %s"), pa_strerror(pa_context_errno(context)));
+
 
             break;
         }
 
         case PA_CONTEXT_FAILED:
-            show_error(_("Connection failed"));
+            w->setConnectionState(false);
+
+            w->removeAllWidgets();
+            w->updateDeviceVisibility();
+            pa_context_unref(context);
+            context = NULL;
+
+            if (reconnect_timeout > 0) {
+                g_debug(_("Connection failed, attempting reconnect"));
+                g_timeout_add_seconds(reconnect_timeout, connect_to_pulse, w);
+            }
             return;
 
         case PA_CONTEXT_TERMINATED:
@@ -448,29 +590,11 @@ pa_context* get_context(void) {
   return context;
 }
 
-int main(int argc, char *argv[]) {
+gboolean connect_to_pulse(gpointer userdata) {
+    MainWindow *w = static_cast<MainWindow*>(userdata);
 
-    /* Initialize the i18n stuff */
-    bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
-    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-    textdomain(GETTEXT_PACKAGE);
-
-    signal(SIGPIPE, SIG_IGN);
-
-    Gtk::Main kit(argc, argv);
-
-    ca_context_set_driver(ca_gtk_context_get(), "pulse");
-
-    MainWindow* mainWindow = MainWindow::create();
-
-    /* Create event widget immediately so it's first in the list */
-    mainWindow->createEventRoleWidget();
-
-
-    pa_glib_mainloop *m = pa_glib_mainloop_new(g_main_context_default());
-    g_assert(m);
-    pa_mainloop_api *api = pa_glib_mainloop_get_api(m);
-    g_assert(api);
+    if (context)
+        return false;
 
     pa_proplist *proplist = pa_proplist_new();
     pa_proplist_sets(proplist, PA_PROP_APPLICATION_NAME, _("PulseAudio Volume Control"));
@@ -483,15 +607,80 @@ int main(int argc, char *argv[]) {
 
     pa_proplist_free(proplist);
 
-    pa_context_set_state_callback(context, context_state_callback, mainWindow);
+    pa_context_set_state_callback(context, context_state_callback, w);
 
-    if (pa_context_connect(context, NULL, (pa_context_flags_t) 0, NULL) < 0)
-        goto finish;
+    w->setConnectingMessage();
+    if (pa_context_connect(context, NULL, PA_CONTEXT_NOFAIL, NULL) < 0) {
+        if (pa_context_errno(context) == PA_ERR_INVALID) {
+            w->setConnectingMessage(_("Connection to PulseAudio failed. Automatic retry in 5s\n\n"
+                "In this case this is likely because PULSE_SERVER in the Environment/X11 Root Window Properties\n"
+                "or default-server in client.conf is misconfigured.\n"
+                "This situation can also arrise when PulseAudio crashed and left stale details in the X11 Root Window.\n"
+                "If this is the case, then PulseAudio should autospawn again, or if this is not configured you should\n"
+                "run start-pulseaudio-x11 manually."));
+            reconnect_timeout = 5;
+        }
+        else {
+            reconnect_timeout = -1;
+            Gtk::Main::quit();
+        }
+    }
 
-    Gtk::Main::run(*mainWindow);
-    delete mainWindow;
+    return false;
+}
 
-finish:
-    pa_context_unref(context);
-    pa_glib_mainloop_free(m);
+int main(int argc, char *argv[]) {
+
+    /* Initialize the i18n stuff */
+    bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+    textdomain(GETTEXT_PACKAGE);
+
+    signal(SIGPIPE, SIG_IGN);
+
+
+    Glib::OptionContext options;
+    options.set_summary("PulseAudio Volume Control");
+    options.set_help_enabled();
+
+    Glib::OptionGroup group("pulseaudio", "PAVUControl");
+
+    Glib::OptionEntry entry;
+    entry.set_long_name("tab");
+    entry.set_short_name('t');
+    entry.set_description(_("Select a specific tab on load."));
+    group.add_entry(entry, default_tab);
+
+    options.set_main_group(group);
+
+    try {
+        Gtk::Main kit(argc, argv, options);
+
+        ca_context_set_driver(ca_gtk_context_get(), "pulse");
+
+        MainWindow* mainWindow = MainWindow::create();
+
+        pa_glib_mainloop *m = pa_glib_mainloop_new(g_main_context_default());
+        g_assert(m);
+        api = pa_glib_mainloop_get_api(m);
+        g_assert(api);
+
+        connect_to_pulse(mainWindow);
+        if (reconnect_timeout >= 0)
+            Gtk::Main::run(*mainWindow);
+
+        if (reconnect_timeout < 0)
+            show_error(_("Fatal Error: Unable to connect to PulseAudio"));
+
+        delete mainWindow;
+
+        if (context)
+            pa_context_unref(context);
+        pa_glib_mainloop_free(m);
+    } catch ( const Glib::OptionError & e ) {
+        fprintf(stderr, "%s", options.get_help().c_str());
+        return 1;
+    }
+
+    return 0;
 }
