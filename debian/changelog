@@ -1,3 +1,9 @@
+pavucontrol (0.99.2-1) UNRELEASED; urgency=low
+
+  * New upstream release
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 18 Sep 2011 21:35:51 +0100
+
 pavucontrol (0.9.9-1) unstable; urgency=low
 
   * New Upstream Version
