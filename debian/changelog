@@ -3,8 +3,9 @@ pavucontrol (0.99.2-1) UNRELEASED; urgency=low
   * New upstream release
   * debian/patches/0001-Define-missing-flags.patch
     + Removed: Not needed anymore
+  * debian/control: Update gtk related build-deps to gtk3
 
- -- Sjoerd Simons <sjoerd@debian.org>  Sun, 18 Sep 2011 21:42:52 +0100
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 18 Sep 2011 21:49:50 +0100
 
 pavucontrol (0.9.9-1) unstable; urgency=low
 
