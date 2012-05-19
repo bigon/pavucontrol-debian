@@ -1,7 +1,7 @@
 Source: pavucontrol
 Section: sound
 Priority: optional
-Maintainer: CJ van den Berg <cj@vdbonline.com>
+Maintainer: Pulseaudio maintenance team <pkg-pulseaudio-devel@lists.alioth.debian.org>
 Uploaders: Sjoerd Simons <sjoerd@debian.org>
 Build-Depends: debhelper (>= 5), cdbs, autotools-dev,
                libpulse-dev (>= 0.9.15),
