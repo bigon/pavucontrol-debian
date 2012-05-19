@@ -1,4 +1,12 @@
 
+2011-09-27	Colin Guthrie
+	035be40: build-sys: Prepare 1.0
+	08e3dd9: build-sys: Switch to the tar-ustar format (as per a lot of GNOME stuff for 3.2) and distribute .xz files.
+	235157e: i18n: Add devicewidget to POTFILES.in
+
+2011-09-23	Arun Raghavan
+	8e359a8: source: Only autosuspend network sources
+
 2011-09-15	Colin Guthrie
 	681c996: build-sys: Prepare 0.99.2
 
