@@ -1,3 +1,9 @@
+pavucontrol (2.0-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Christer Stenbrenden <christer@uggwar.net>  Thu, 20 Feb 2014 22:54:16 +0100
+
 pavucontrol (1.0-1) unstable; urgency=low
 
   * New upstream release
