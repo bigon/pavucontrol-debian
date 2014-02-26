@@ -1,6 +1,7 @@
 pavucontrol (2.0-1) unstable; urgency=medium
 
   * New upstream release
+  * Don't crash if pa_stream_peek returns NULL (Closes: #735898)
 
  -- Christer Stenbrenden <christer@uggwar.net>  Thu, 20 Feb 2014 22:54:16 +0100
 
