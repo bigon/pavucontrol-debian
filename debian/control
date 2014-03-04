@@ -2,7 +2,7 @@ Source: pavucontrol
 Section: sound
 Priority: optional
 Maintainer: Pulseaudio maintenance team <pkg-pulseaudio-devel@lists.alioth.debian.org>
-Uploaders: Sjoerd Simons <sjoerd@debian.org>
+Uploaders: Sjoerd Simons <sjoerd@debian.org>, Léo Cavaillé <leo@cavaille.net>
 Build-Depends: debhelper (>= 5), cdbs, autotools-dev,
                libpulse-dev (>= 0.9.15),
                libgtkmm-3.0-dev,
@@ -13,7 +13,7 @@ Build-Depends: debhelper (>= 5), cdbs, autotools-dev,
                quilt,
                libcanberra-gtk3-dev (>= 0.16),
                intltool
-Standards-Version: 3.7.2
+Standards-Version: 3.9.5
 Vcs-Git: git://git.debian.org/git/pkg-pulseaudio/pavucontrol.git
 Vcs-Browser: http://git.debian.org/?p=pkg-pulseaudio/pavucontrol.git
 Homepage: http://0pointer.de/lennart/projects/pavucontrol/

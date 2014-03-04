@@ -1,4 +1,4 @@
-pavucontrol (2.0-1) unstable; urgency=medium
+pavucontrol (2.0-1) unstable; urgency=high
 
   * New upstream release (Closes: #712551)
   * Don't crash if pa_stream_peek returns NULL (Closes: #735898)
