@@ -19,11 +19,12 @@
 # along with pavucontrol. If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.62)
-AC_INIT([pavucontrol],[1.0],[mzcnihpbageby (at) 0pointer (dot) de])
+AC_INIT([pavucontrol],[2.0],[mzcnihpbageby (at) 0pointer (dot) de])
 AC_CONFIG_SRCDIR([src/pavucontrol.cc])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([foreign 1.11 -Wall dist-xz tar-ustar])
+AM_SILENT_RULES([yes])
 
 AC_SUBST(PACKAGE_URL, [http://freedesktop.org/software/pulseaudio/pavucontrol/])
 

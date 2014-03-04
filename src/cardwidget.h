@@ -23,6 +23,17 @@
 
 #include "pavucontrol.h"
 
+class PortInfo {
+public:
+      Glib::ustring name;
+      Glib::ustring description;
+      uint32_t priority;
+      int available;
+      int direction;
+      int64_t latency_offset;
+      std::vector<Glib::ustring> profiles;
+};
+
 class CardWidget : public Gtk::VBox {
 public:
     CardWidget(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& x);
@@ -36,6 +47,7 @@ public:
     bool updating;
 
     std::vector< std::pair<Glib::ustring,Glib::ustring> > profiles;
+    std::map<Glib::ustring, PortInfo> ports;
     Glib::ustring activeProfile;
     bool hasSinks;
     bool hasSources;
