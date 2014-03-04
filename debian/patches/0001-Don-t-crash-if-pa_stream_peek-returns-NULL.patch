@@ -6,18 +6,17 @@ Subject: Don't crash if pa_stream_peek returns NULL
  src/mainwindow.cc | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/src/mainwindow.cc b/src/mainwindow.cc
-index be6fb93..3e69af0 100644
 --- a/src/mainwindow.cc
 +++ b/src/mainwindow.cc
-@@ -483,8 +483,8 @@ static void read_callback(pa_stream *s, size_t length, void *userdata) {
-     const void *data;
-     double v;
- 
--    if (pa_stream_peek(s, &data, &length) < 0) {
--        show_error(_("Failed to read data from stream"));
-+    if (!data) {
-+        pa_stream_drop(s);
+@@ -488,6 +488,11 @@
          return;
      }
+ 
++    if (!data) {
++        pa_stream_drop(s);
++        return;
++    }
++
+     assert(length > 0);
+     assert(length % sizeof(float) == 0);
  
