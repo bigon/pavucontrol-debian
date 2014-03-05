@@ -1,9 +1,20 @@
 pavucontrol (2.0-1) unstable; urgency=high
 
+  [ Christer Stenbrenden ]
   * New upstream release (Closes: #712551)
   * Don't crash if pa_stream_peek returns NULL (Closes: #735898)
+    + Added debian/patches/0001-Don-t-crash...
+  * README file improvement
 
- -- Christer Stenbrenden <christer@uggwar.net>  Thu, 20 Feb 2014 22:54:16 +0100
+  [ Léo Cavaillé ]
+
+  * Fixed debian/patches/0001-Don-t-crash... by re-adding pa_stream_peek
+  call
+  * debian/control: bump standards version to 3.9.5
+  * Used a patch for README improvements to keep upstream tarball clean
+    + Added debian/patches/0002-README-updating.patch
+
+ -- Léo Cavaillé <leo@cavaille.net>  Wed, 05 Mar 2014 21:16:08 +0100
 
 pavucontrol (1.0-1) unstable; urgency=low
 
