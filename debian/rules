@@ -4,6 +4,8 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
+DEB_DESTDIR = $(CURDIR)/debian/pavucontrol
+
 common-build-arch:: $(CURDIR)/debian/pavucontrol.1.txt
 	a2x -d manpage -f manpage $(CURDIR)/debian/pavucontrol.1.txt
 

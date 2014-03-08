@@ -1,3 +1,10 @@
+pavucontrol (2.0-2) UNRELEASED; urgency=medium
+
+  * Build debug package pavucontrol-dbg with symbols
+  (Closes: #737451)
+
+ -- Léo Cavaillé <leo@cavaille.net>  Mon, 10 Mar 2014 00:42:27 +0100
+
 pavucontrol (2.0-1) unstable; urgency=high
 
   [ Christer Stenbrenden ]

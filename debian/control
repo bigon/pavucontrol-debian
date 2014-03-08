@@ -28,3 +28,20 @@ Description: PulseAudio Volume Control
  hardware devices and of each playback stream separately. It also allows
  you to redirect a playback stream to another output device without
  interrupting playback.
+
+Package: pavucontrol-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends:
+    pavucontrol (= ${binary:Version}),
+    ${misc:Depends}
+Description: Debugging symbols for pavucontrol
+ PulseAudio Volume Control (pavucontrol) is a simple GTK+ based volume
+ control tool (mixer) for the PulseAudio sound server. In contrast to
+ classic mixer tools this one allows you to control both the volume of
+ hardware devices and of each playback stream separately. It also allows
+ you to redirect a playback stream to another output device without
+ interrupting playback.
+ .
+ This package contains the debugging symbols for pavucontrol.
