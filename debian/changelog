@@ -2,6 +2,7 @@ pavucontrol (2.0-2) UNRELEASED; urgency=medium
 
   * Build debug package pavucontrol-dbg with symbols
   (Closes: #737451)
+  * Adds pulseaudio server to Recommends (Closes: #717719)
 
  -- Léo Cavaillé <leo@cavaille.net>  Mon, 10 Mar 2014 00:42:27 +0100
 

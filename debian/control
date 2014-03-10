@@ -21,6 +21,7 @@ Homepage: http://0pointer.de/lennart/projects/pavucontrol/
 Package: pavucontrol
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: pulseaudio
 Description: PulseAudio Volume Control
  PulseAudio Volume Control (pavucontrol) is a simple GTK+ based volume
  control tool (mixer) for the PulseAudio sound server. In contrast to
