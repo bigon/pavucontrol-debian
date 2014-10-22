@@ -1,0 +1,76 @@
+From: Hans de Goede <hdegoede@redhat.com>
+Date: Fri, 29 Aug 2014 09:42:04 +0200
+Subject: Do not instantiate cardwidget,
+ devicewidget and rolewidget with a type of EventBox
+
+RoleWidget::create contains:
+    x->get_widget_derived("streamWidget", w);
+
+But streamWidget is defined as following in the glade file:
+<object class="GtkEventBox" id="streamWidget">
+
+Where as RoleWidget is derived from [Minimal]StreamWidget, which is derived
+from Gtk::VBox, so this is clearly wrong.
+
+Adding:
+printf("rolewidget type: %s\n", g_type_name(G_TYPE_FROM_INSTANCE(w->gobj())));
+for debugging shows that this really leads to RoleWidget being instantiated
+as an EventBox (yet things still work due to sheer luck).
+
+This commit fixes this, by putting the streamWidget id at the right level of
+the hierarchy in the glade file (and likewise for cardWidget and deviceWidget).
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+---
+ src/pavucontrol.glade | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/src/pavucontrol.glade b/src/pavucontrol.glade
+index 6defb3d..fd43217 100644
+--- a/src/pavucontrol.glade
++++ b/src/pavucontrol.glade
+@@ -12,12 +12,12 @@
+     <property name="can_focus">False</property>
+     <property name="title" translatable="yes">window1</property>
+     <child>
+-      <object class="GtkEventBox" id="cardWidget">
++      <object class="GtkEventBox" id="cardWidgetBox">
+         <property name="visible">True</property>
+         <property name="can_focus">False</property>
+         <property name="visible_window">False</property>
+         <child>
+-          <object class="GtkVBox" id="cardWidget1">
++          <object class="GtkVBox" id="cardWidget">
+             <property name="visible">True</property>
+             <property name="can_focus">False</property>
+             <child>
+@@ -202,12 +202,12 @@
+     <property name="can_focus">False</property>
+     <property name="title" translatable="yes">window1</property>
+     <child>
+-      <object class="GtkEventBox" id="deviceWidget">
++      <object class="GtkEventBox" id="deviceWidgetBox">
+         <property name="visible">True</property>
+         <property name="can_focus">False</property>
+         <property name="visible_window">False</property>
+         <child>
+-          <object class="GtkVBox" id="streamWidget2">
++          <object class="GtkVBox" id="deviceWidget">
+             <property name="visible">True</property>
+             <property name="can_focus">False</property>
+             <child>
+@@ -1316,12 +1316,12 @@
+     <property name="can_focus">False</property>
+     <property name="title" translatable="yes">window1</property>
+     <child>
+-      <object class="GtkEventBox" id="streamWidget">
++      <object class="GtkEventBox" id="streamWidgetBox">
+         <property name="visible">True</property>
+         <property name="can_focus">False</property>
+         <property name="visible_window">False</property>
+         <child>
+-          <object class="GtkVBox" id="streamWidget2">
++          <object class="GtkVBox" id="streamWidget">
+             <property name="visible">True</property>
+             <property name="can_focus">False</property>
+             <child>
