@@ -1,0 +1,23 @@
+From: Felipe Sateler <fsateler@debian.org>
+Date: Wed, 22 Oct 2014 19:50:00 -0300
+Subject: pavucontrol: Handle IO errors in icon setting code
+
+If gtk cannot load the file, it will throw a Gio::Error. In that case
+fall back to setting the name.
+---
+ src/mainwindow.cc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/mainwindow.cc b/src/mainwindow.cc
+index a67b15c..fbd72e8 100644
+--- a/src/mainwindow.cc
++++ b/src/mainwindow.cc
+@@ -249,6 +249,8 @@ static void set_icon_name_fallback(Gtk::Image *i, const char *name, Gtk::IconSiz
+             i->set(name);
+     } catch (Gtk::IconThemeError &e) {
+         i->set(name);
++    } catch (Gio::Error &e) {
++        i->set(name);
+     }
+ }
+ 

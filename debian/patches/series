@@ -2,3 +2,4 @@
 0002-README-updating.patch
 0003-Reference-the-widget-before-returning-it-from-create.patch
 0004-Do-not-instantiate-cardwidget-devicewidget-and-rolew.patch
+0005-pavucontrol-Handle-IO-errors-in-icon-setting-code.patch
