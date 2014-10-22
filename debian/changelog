@@ -1,3 +1,14 @@
+pavucontrol (2.0-3) unstable; urgency=medium
+
+  * Backport patches from upstream that fix gtk/glade usage
+  * Handle IO errors when loading theme icon. Closes: #765725
+  * Drop patchsys-quilt: package is 3.0 (quilt)
+  * Drop README-updating.patch, remove README on clean to ensure rebuild
+  * Add myself to uploaders
+  * Bump standards version, no changes needed
+
+ -- Felipe Sateler <fsateler@debian.org>  Wed, 22 Oct 2014 20:44:36 -0300
+
 pavucontrol (2.0-2) unstable; urgency=medium
 
   [ Léo Cavaillé ]
