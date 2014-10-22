@@ -11,6 +11,7 @@ common-build-arch:: $(CURDIR)/debian/pavucontrol.1.txt
 clean::
 	rm -f $(CURDIR)/debian/pavucontrol.1.xml
 	rm -f $(CURDIR)/debian/pavucontrol.1
+	rm -f README
 
 update-patch-series:
 	mkdir -p $(CURDIR)/debian/patches
