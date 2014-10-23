@@ -16,9 +16,9 @@ Build-Depends: debhelper (>= 5), cdbs, autotools-dev,
                libcanberra-gtk3-dev (>= 0.16),
                intltool
 Standards-Version: 3.9.6
-Vcs-Git: git://git.debian.org/git/pkg-pulseaudio/pavucontrol.git
-Vcs-Browser: http://git.debian.org/?p=pkg-pulseaudio/pavucontrol.git
-Homepage: http://0pointer.de/lennart/projects/pavucontrol/
+Vcs-Git: git://anonscm.debian.org/pkg-pulseaudio/pavucontrol.git
+Vcs-Browser: http://anonscm.debian.org/cgit/pkg-pulseaudio/pavucontrol.git
+Homepage: http://freedesktop.org/software/pulseaudio/pavucontrol/
 
 Package: pavucontrol
 Architecture: any
