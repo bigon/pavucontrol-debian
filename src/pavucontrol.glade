@@ -12,12 +12,12 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">window1</property>
     <child>
-      <object class="GtkEventBox" id="cardWidget">
+      <object class="GtkEventBox" id="cardWidgetBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="visible_window">False</property>
         <child>
-          <object class="GtkVBox" id="cardWidget1">
+          <object class="GtkVBox" id="cardWidget">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -202,12 +202,12 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">window1</property>
     <child>
-      <object class="GtkEventBox" id="deviceWidget">
+      <object class="GtkEventBox" id="deviceWidgetBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="visible_window">False</property>
         <child>
-          <object class="GtkVBox" id="streamWidget2">
+          <object class="GtkVBox" id="deviceWidget">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -256,6 +256,7 @@
                             <property name="xalign">0</property>
                             <property name="label" translatable="yes">Device Title</property>
                             <property name="use_markup">True</property>
+                            <property name="ellipsize">end</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -427,9 +428,6 @@
                             <property name="n_rows">2</property>
                             <property name="n_columns">3</property>
                             <child>
-                              <placeholder/>
-                            </child>
-                            <child>
                               <object class="GtkCheckButton" id="encodingFormatPCM">
                                 <property name="label" translatable="yes">PCM</property>
                                 <property name="use_action_appearance">False</property>
@@ -495,6 +493,22 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="encodingFormatAAC">
+                                <property name="label" translatable="yes">AAC</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="draw_indicator">True</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">2</property>
+                                <property name="right_attach">3</property>
                                 <property name="top_attach">1</property>
                                 <property name="bottom_attach">2</property>
                               </packing>
@@ -691,6 +705,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="show_border">False</property>
+            <property name="scrollable">True</property>
             <child>
               <object class="GtkVBox" id="vbox32">
                 <property name="visible">True</property>
@@ -700,7 +715,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="border_width">12</property>
-                    <property name="hscrollbar_policy">never</property>
+                    <property name="hscrollbar_policy">automatic</property>
                     <property name="vscrollbar_policy">automatic</property>
                     <child>
                       <object class="GtkViewport" id="viewport1">
@@ -814,7 +829,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="border_width">12</property>
-                    <property name="hscrollbar_policy">never</property>
+                    <property name="hscrollbar_policy">automatic</property>
                     <property name="vscrollbar_policy">automatic</property>
                     <child>
                       <object class="GtkViewport" id="viewport5">
@@ -932,7 +947,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="border_width">12</property>
-                    <property name="hscrollbar_policy">never</property>
+                    <property name="hscrollbar_policy">automatic</property>
                     <property name="vscrollbar_policy">automatic</property>
                     <child>
                       <object class="GtkViewport" id="viewport4">
@@ -1051,7 +1066,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="border_width">12</property>
-                    <property name="hscrollbar_policy">never</property>
+                    <property name="hscrollbar_policy">automatic</property>
                     <property name="vscrollbar_policy">automatic</property>
                     <child>
                       <object class="GtkViewport" id="viewport3">
@@ -1171,7 +1186,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="border_width">12</property>
-                    <property name="hscrollbar_policy">never</property>
+                    <property name="hscrollbar_policy">automatic</property>
                     <property name="vscrollbar_policy">automatic</property>
                     <child>
                       <object class="GtkViewport" id="viewport2">
@@ -1316,12 +1331,12 @@
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">window1</property>
     <child>
-      <object class="GtkEventBox" id="streamWidget">
+      <object class="GtkEventBox" id="streamWidgetBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="visible_window">False</property>
         <child>
-          <object class="GtkVBox" id="streamWidget2">
+          <object class="GtkVBox" id="streamWidget">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -1371,6 +1386,7 @@
                             <property name="xalign">0</property>
                             <property name="label" translatable="yes">Stream Title</property>
                             <property name="use_markup">True</property>
+                            <property name="ellipsize">end</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>

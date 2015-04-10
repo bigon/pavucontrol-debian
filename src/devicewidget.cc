@@ -46,6 +46,7 @@ DeviceWidget::DeviceWidget(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Buil
 
     this->signal_button_press_event().connect(sigc::mem_fun(*this, &DeviceWidget::onContextTriggerEvent));
     muteToggleButton->signal_clicked().connect(sigc::mem_fun(*this, &DeviceWidget::onMuteToggleButton));
+    lockToggleButton->signal_clicked().connect(sigc::mem_fun(*this, &DeviceWidget::onLockToggleButton));
     defaultToggleButton->signal_clicked().connect(sigc::mem_fun(*this, &DeviceWidget::onDefaultToggleButton));
 
     rename.set_label(_("Rename Device..."));
@@ -63,8 +64,13 @@ DeviceWidget::DeviceWidget(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Buil
     for (unsigned i = 0; i < PA_CHANNELS_MAX; i++)
         channelWidgets[i] = NULL;
 
+#ifdef HAVE_GTK3
     offsetAdjustment = Gtk::Adjustment::create(0.0, -2000.0, 2000.0, 10.0, 50.0, 0.0);
     offsetButton->configure(offsetAdjustment, 0, 2);
+#else
+    offsetAdjustment = new Gtk::Adjustment(0.0, -2000.0, 2000.0, 10.0, 50.0, 0.0);
+    offsetButton->configure(*offsetAdjustment, 0.0, 2);
+#endif  /* HAVE_GTK3 */
 }
 
 void DeviceWidget::init(MainWindow* mainWindow, Glib::ustring deviceType) {
@@ -84,10 +90,12 @@ void DeviceWidget::setChannelMap(const pa_channel_map &m, bool can_decibel) {
         snprintf(text, sizeof(text), "<b>%s</b>", pa_channel_position_to_pretty_string(m.map[i]));
         cw->channelLabel->set_markup(text);
         channelsVBox->pack_start(*cw, false, false, 0);
+        cw->unreference();
     }
     channelWidgets[m.channels-1]->last = true;
 
     lockToggleButton->set_sensitive(m.channels > 1);
+    hideLockedChannels(lockToggleButton->get_active());
 }
 
 void DeviceWidget::setVolume(const pa_cvolume &v, bool force) {
@@ -117,12 +125,23 @@ void DeviceWidget::updateChannelVolume(int channel, pa_volume_t v) {
         timeoutConnection = Glib::signal_timeout().connect(sigc::mem_fun(*this, &DeviceWidget::timeoutEvent), 100);
 }
 
+void DeviceWidget::hideLockedChannels(bool hide) {
+    for (int i = 0; i < channelMap.channels - 1; i++)
+        channelWidgets[i]->set_visible(!hide);
+
+    channelWidgets[channelMap.channels - 1]->channelLabel->set_visible(!hide);
+}
+
 void DeviceWidget::onMuteToggleButton() {
 
     lockToggleButton->set_sensitive(!muteToggleButton->get_active());
 
     for (int i = 0; i < channelMap.channels; i++)
         channelWidgets[i]->set_sensitive(!muteToggleButton->get_active());
+}
+
+void DeviceWidget::onLockToggleButton() {
+    hideLockedChannels(lockToggleButton->get_active());
 }
 
 void DeviceWidget::onDefaultToggleButton() {

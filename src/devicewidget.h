@@ -37,6 +37,8 @@ public:
     void setVolume(const pa_cvolume &volume, bool force = false);
     virtual void updateChannelVolume(int channel, pa_volume_t v);
 
+    void hideLockedChannels(bool hide = true);
+
     Glib::ustring name;
     Glib::ustring description;
     uint32_t index, card_index;
@@ -52,6 +54,7 @@ public:
     ChannelWidget *channelWidgets[PA_CHANNELS_MAX];
 
     virtual void onMuteToggleButton();
+    virtual void onLockToggleButton();
     virtual void onDefaultToggleButton();
     virtual void setDefault(bool isDefault);
     virtual bool onContextTriggerEvent(GdkEventButton*);
@@ -98,7 +101,11 @@ protected:
     Gtk::HBox *portSelect, *offsetSelect;
     Gtk::ComboBox *portList;
     Glib::RefPtr<Gtk::ListStore> treeModel;
+#ifdef HAVE_GTK3
     Glib::RefPtr<Gtk::Adjustment> offsetAdjustment;
+#else
+    Gtk::Adjustment *offsetAdjustment;
+#endif /* HAVE_GTK3 */
 
 private:
     Glib::ustring mDeviceType;

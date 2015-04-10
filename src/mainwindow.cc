@@ -125,6 +125,38 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
         get_default_size(default_width, default_height);
         if (width >= default_width && height >= default_height)
             resize(width, height);
+
+        int sinkInputTypeSelection = g_key_file_get_integer(config, "window", "sinkInputType", &err);
+        if (err == NULL)
+            sinkInputTypeComboBox->set_active(sinkInputTypeSelection);
+        else {
+            g_error_free(err);
+            err = NULL;
+        }
+
+        int sourceOutputTypeSelection = g_key_file_get_integer(config, "window", "sourceOutputType", &err);
+        if (err == NULL)
+            sourceOutputTypeComboBox->set_active(sourceOutputTypeSelection);
+        else {
+            g_error_free(err);
+            err = NULL;
+        }
+
+        int sinkTypeSelection = g_key_file_get_integer(config, "window", "sinkType", &err);
+        if (err == NULL)
+            sinkTypeComboBox->set_active(sinkTypeSelection);
+        else {
+            g_error_free(err);
+            err = NULL;
+        }
+
+        int sourceTypeSelection = g_key_file_get_integer(config, "window", "sourceType", &err);
+        if (err == NULL)
+            sourceTypeComboBox->set_active(sourceTypeSelection);
+        else {
+            g_error_free(err);
+            err = NULL;
+        }
     } else {
         g_debug(_("Error reading config file %s: %s"), m_config_filename, err->message);
         g_error_free(err);
@@ -137,7 +169,7 @@ MainWindow::MainWindow(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>
     connectingLabel->show();
 }
 
-MainWindow* MainWindow::create() {
+MainWindow* MainWindow::create(bool maximize) {
     MainWindow* w;
     Glib::RefPtr<Gtk::Builder> x = Gtk::Builder::create();
     x->add_from_file(GLADE_FILE, "liststore1");
@@ -146,6 +178,8 @@ MainWindow* MainWindow::create() {
     x->add_from_file(GLADE_FILE, "liststore4");
     x->add_from_file(GLADE_FILE, "mainWindow");
     x->get_widget_derived("mainWindow", w);
+    if (w && maximize)
+        w->maximize();
     return w;
 }
 
@@ -200,6 +234,10 @@ MainWindow::~MainWindow() {
     get_size(width, height);
     g_key_file_set_integer(config, "window", "width", width);
     g_key_file_set_integer(config, "window", "height", height);
+    g_key_file_set_integer(config, "window", "sinkInputType", sinkInputTypeComboBox->get_active_row_number());
+    g_key_file_set_integer(config, "window", "sourceOutputType", sourceOutputTypeComboBox->get_active_row_number());
+    g_key_file_set_integer(config, "window", "sinkType", sinkTypeComboBox->get_active_row_number());
+    g_key_file_set_integer(config, "window", "sourceType", sourceTypeComboBox->get_active_row_number());
 
     gsize filelen;
     GError *err = NULL;
@@ -248,6 +286,10 @@ static void set_icon_name_fallback(Gtk::Image *i, const char *name, Gtk::IconSiz
         else
             i->set(name);
     } catch (Gtk::IconThemeError &e) {
+        i->set(name);
+    } catch (Gio::Error &e) {
+        i->set(name);
+    } catch (Gdk::PixbufError &e) {
         i->set(name);
     }
 }
@@ -298,6 +340,7 @@ void MainWindow::updateCard(const pa_card_info &info) {
     else {
         cardWidgets[info.index] = w = CardWidget::create();
         cardsVBox->pack_start(*w, false, false, 0);
+        w->unreference();
         w->index = info.index;
         is_new = true;
     }
@@ -414,6 +457,7 @@ bool MainWindow::updateSink(const pa_sink_info &info) {
         sinkWidgets[info.index] = w = SinkWidget::create(this);
         w->setChannelMap(info.channel_map, !!(info.flags & PA_SINK_DECIBEL_VOLUME));
         sinksVBox->pack_start(*w, false, false, 0);
+        w->unreference();
         w->index = info.index;
         w->monitor_index = info.monitor_source;
         is_new = true;
@@ -431,6 +475,7 @@ bool MainWindow::updateSink(const pa_sink_info &info) {
     w->boldNameLabel->set_text("");
     gchar *txt;
     w->nameLabel->set_markup(txt = g_markup_printf_escaped("%s", info.description));
+    w->nameLabel->set_tooltip_text(info.description);
     g_free(txt);
 
     icon = pa_proplist_gets(info.proplist, PA_PROP_DEVICE_ICON_NAME);
@@ -485,6 +530,14 @@ static void read_callback(pa_stream *s, size_t length, void *userdata) {
 
     if (pa_stream_peek(s, &data, &length) < 0) {
         show_error(_("Failed to read data from stream"));
+        return;
+    }
+
+    if (!data) {
+        /* NULL data means either a hole or empty buffer.
+         * Only drop the stream when there is a hole (length > 0) */
+        if (length)
+            pa_stream_drop(s);
         return;
     }
 
@@ -567,6 +620,7 @@ void MainWindow::updateSource(const pa_source_info &info) {
         sourceWidgets[info.index] = w = SourceWidget::create(this);
         w->setChannelMap(info.channel_map, !!(info.flags & PA_SOURCE_DECIBEL_VOLUME));
         sourcesVBox->pack_start(*w, false, false, 0);
+        w->unreference();
         w->index = info.index;
         is_new = true;
 
@@ -586,6 +640,7 @@ void MainWindow::updateSource(const pa_source_info &info) {
     w->boldNameLabel->set_text("");
     gchar *txt;
     w->nameLabel->set_markup(txt = g_markup_printf_escaped("%s", info.description));
+    w->nameLabel->set_tooltip_text(info.description);
     g_free(txt);
 
     icon = pa_proplist_gets(info.proplist, PA_PROP_DEVICE_ICON_NAME);
@@ -682,6 +737,7 @@ void MainWindow::updateSinkInput(const pa_sink_input_info &info) {
         sinkInputWidgets[info.index] = w = SinkInputWidget::create(this);
         w->setChannelMap(info.channel_map, true);
         streamsVBox->pack_start(*w, false, false, 0);
+        w->unreference();
         w->index = info.index;
         w->clientIndex = info.client;
         is_new = true;
@@ -706,6 +762,8 @@ void MainWindow::updateSinkInput(const pa_sink_input_info &info) {
         w->boldNameLabel->set_text("");
         w->nameLabel->set_label(info.name);
     }
+
+    w->nameLabel->set_tooltip_text(info.name);
 
     setIconFromProplist(w->iconImage, info.proplist, "audio-card");
 
@@ -737,6 +795,7 @@ void MainWindow::updateSourceOutput(const pa_source_output_info &info) {
         w->setChannelMap(info.channel_map, true);
 #endif
         recsVBox->pack_start(*w, false, false, 0);
+        w->unreference();
         w->index = info.index;
         w->clientIndex = info.client;
         is_new = true;
@@ -758,6 +817,8 @@ void MainWindow::updateSourceOutput(const pa_source_output_info &info) {
         w->boldNameLabel->set_text("");
         w->nameLabel->set_label(info.name);
     }
+
+    w->nameLabel->set_tooltip_text(info.name);
 
     setIconFromProplist(w->iconImage, info.proplist, "audio-input-microphone");
 
@@ -830,6 +891,7 @@ bool MainWindow::createEventRoleWidget() {
 
     eventRoleWidget = RoleWidget::create();
     streamsVBox->pack_start(*eventRoleWidget, false, false, 0);
+    eventRoleWidget->unreference();
     eventRoleWidget->role = "sink-input-by-media-role:event";
     eventRoleWidget->setChannelMap(cm, true);
 
