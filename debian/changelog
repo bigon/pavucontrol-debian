@@ -1,6 +1,7 @@
 pavucontrol (3.0-1) UNRELEASED; urgency=medium
 
   * New upstream release
+  * Drop all patches: applied upstream
 
  -- Felipe Sateler <fsateler@debian.org>  Fri, 10 Apr 2015 21:11:53 -0300
 
