@@ -1,3 +1,9 @@
+pavucontrol (3.0-1) UNRELEASED; urgency=medium
+
+  * New upstream release
+
+ -- Felipe Sateler <fsateler@debian.org>  Fri, 10 Apr 2015 21:11:53 -0300
+
 pavucontrol (2.0-3) unstable; urgency=medium
 
   * Backport patches from upstream that fix gtk/glade usage
