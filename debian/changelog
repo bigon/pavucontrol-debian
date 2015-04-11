@@ -1,9 +1,10 @@
-pavucontrol (3.0-1) UNRELEASED; urgency=medium
+pavucontrol (3.0-1) experimental; urgency=medium
 
-  * New upstream release
-  * Drop all patches: applied upstream
+  * New upstream release. Closes: #781104
+    - Drop all patches: applied upstream
+    - Doesn't expand forever. Closes: #768500
 
- -- Felipe Sateler <fsateler@debian.org>  Fri, 10 Apr 2015 21:11:53 -0300
+ -- Felipe Sateler <fsateler@debian.org>  Fri, 10 Apr 2015 23:15:38 -0300
 
 pavucontrol (2.0-3) unstable; urgency=medium
 
