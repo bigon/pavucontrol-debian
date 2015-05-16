@@ -23,7 +23,8 @@ interrupting playback.
 
 Options
 -------
-_pavucontrol_ does not accept any options.
+*-t, --tab* 'NUMBER'::
+Select tab 'NUMBER' on load
 
 
 See Also

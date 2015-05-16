@@ -1,3 +1,10 @@
+pavucontrol (3.0-3) unstable; urgency=medium
+
+  * pavucontrol.1: document --tab option. Thanks Tomas Pospisek
+    Closes: #785434.
+
+ -- Felipe Sateler <fsateler@debian.org>  Sat, 16 May 2015 15:15:38 -0300
+
 pavucontrol (3.0-2) unstable; urgency=medium
 
   * Upload to unstable
