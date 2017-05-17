@@ -5,6 +5,8 @@ include /usr/share/cdbs/1/class/autotools.mk
 
 DEB_DESTDIR = $(CURDIR)/debian/pavucontrol
 
+DEB_INSTALL_DOCS_ALL = -XREADME doc/README
+
 common-build-arch:: $(CURDIR)/debian/pavucontrol.1.txt
 	a2x -d manpage -f manpage $(CURDIR)/debian/pavucontrol.1.txt
 
