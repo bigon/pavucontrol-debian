@@ -1,0 +1,25 @@
+Description: Use freedesktop.org standard icon name
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863203
+Bug: https://bugs.freedesktop.org/show_bug.cgi?id=99577
+Forwarded: yes
+
+--- a/src/pavucontrol.glade
++++ b/src/pavucontrol.glade
+@@ -312,7 +312,7 @@
+                               <object class="GtkImage" id="image18">
+                                 <property name="visible">True</property>
+                                 <property name="can_focus">False</property>
+-                                <property name="icon_name">stock_lock</property>
++                                <property name="icon_name">changes-prevent</property>
+                                 <property name="icon-size">1</property>
+                               </object>
+                             </child>
+@@ -1474,7 +1474,7 @@
+                               <object class="GtkImage" id="image18">
+                                 <property name="visible">True</property>
+                                 <property name="can_focus">False</property>
+-                                <property name="icon_name">stock_lock</property>
++                                <property name="icon_name">changes-prevent</property>
+                                 <property name="icon-size">1</property>
+                               </object>
+                             </child>
