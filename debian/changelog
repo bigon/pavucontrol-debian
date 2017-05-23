@@ -1,3 +1,15 @@
+pavucontrol (3.0-3.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  [ Felipe Sateler ]
+  * Add revision date to pavucontrol manpage to make build reproducible
+  * Install real README file instead of a broken symlink (Closes: #862729)
+
+  [ Laurent Bigonville ]
+  * Use changes-prevent icon instead of the stock_lock one (Closes: #863203)
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 23 May 2017 18:36:53 +0200
+
 pavucontrol (3.0-3) unstable; urgency=medium
 
   * pavucontrol.1: document --tab option. Thanks Tomas Pospisek
